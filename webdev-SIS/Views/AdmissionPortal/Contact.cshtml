@@ -1,0 +1,294 @@
+﻿@model AdmissionEntity
+@{
+    Layout = "AdmissionLayout";  // Specifies the layout to use
+    ViewData["Title"] = "Contact";
+}
+<!-- Progress Steps -->
+<div class="form-progress">
+    <div class="progress-step active" id="createAccountStep">
+        <div class="progress-circle active">1</div>
+        <small>Create Account</small>
+    </div>
+    <div class="progress-step active" id="instructionsStep">
+        <div class="progress-circle active">2</div>
+        <small>Instructions</small>
+    </div>
+    <div class="progress-step active" id="personalInfoStep">
+        <div class="progress-circle active">3</div>
+        <small>Personal Information</small>
+    </div>
+    <div class="progress-step active" id="contactStep">
+        <div class="progress-circle active">4</div>
+        <small>Contact</small>
+    </div>
+    <div class="progress-step" id="familyStep">
+        <div class="progress-circle">5</div>
+        <small>Family</small>
+    </div>
+    <div class="progress-step" id="schoolStep">
+        <div class="progress-circle">6</div>
+        <small>School</small>
+    </div>
+    <div class="progress-step" id="finishStep">
+        <div class="progress-circle">7</div>
+        <small>Finish</small>
+    </div>
+</div>
+<hr />
+
+@if (Model != null)
+{
+    <form asp-controller="AdmissionPortal" asp-action="Contact" method="post">
+        <div class="container mt-4 row mb-3 mt-3 align-items-end flex-grow-1 p-4 border rounded shadow-sm" style="background-color: #ffffff;">
+            <!-- Contact Information -->
+            <div class="p-3 text-white rounded mb-3" style="background-color: #172154;">
+                <h6 class="fw-bold mb-0">Contact Information</h6>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <!-- Landline Number -->
+                    <div class="form-group">
+                        <label for="LandlineNumber" class="form-label">
+                            Landline Number <span class="text-secondary" style="font-size: 0.85em;">(optional)</span>
+                        </label>
+                        <input type="tel" id="LandlineNumber" name="LandlineNumber" class="form-control form-input"
+                               pattern="^\d{8}$" maxlength="8"
+                               title="Landline number must be exactly 8 digits." value="@Model.Landline_number"
+                               onchange="validateLandline('LandlineNumber', 'landlineError')">
+                        <small class="text-muted" style="font-size: 0.85em;">Enter an 8-digit landline number.</small>
+                        <small id="landlineError" class="error-message" style="font-size: 0.85em;"></small>
+                    </div>
+                </div>
+
+
+                <!-- Phone Number -->
+                <div class="col-md-4">
+                    <label for="Phone_number" class="form-label">Phone Number <span style="color: red;">*</span></label>
+                    <input type="tel" id="Phone_number" name="Phone_number" class="form-control form-input"
+                           pattern="^\d{11}$" maxlength="11" required
+                           title="Phone number must be exactly 11 digits." value="@Model.Phone_number">
+                    <small class="text-muted" style="font-size: 0.85em;">Enter an 11-digit mobile number.</small>
+                    <small id="phoneError" class="error-message" style="font-size: 0.85em;"></small>
+                </div>
+            </div>
+
+            <div class="p-3 text-white rounded mb-3" style="background-color: #172154;">
+                <h6 class="fw-bold mb-0">In case of emergency</h6>
+            </div>
+
+            <div class="row mb-3 align-items-end">
+                <div class="row mb-3 align-items-end">
+                    <!-- Emergency Landline Number -->
+                    <div class="form-group">
+                        <label for="EmergencyLandlineNumber" class="form-label">
+                            Emergency Landline Number <span class="text-secondary" style="font-size: 0.85em;">(optional)</span>
+                        </label>
+                        <input type="tel" id="EmergencyLandlineNumber" name="EmergencyLandlineNumber" class="form-control form-input"
+                               pattern="^\d{8}$" maxlength="8"
+                               title="Landline number must be exactly 8 digits." value="@Model.Emergency_landline_number"
+                               onchange="validateLandline('EmergencyLandlineNumber', 'emergencyLandlineError')">
+                        <small class="text-muted" style="font-size: 0.85em;">Enter an 8-digit landline number.</small>
+                        <small id="emergencyLandlineError" class="error-message" style="font-size: 0.85em;"></small>
+                    </div>
+
+                    <!-- Checkbox to Copy Landline -->
+                    <div class="col-md-12 d-flex align-items-center mt-4">
+                        <input type="checkbox" id="CopyLandline" class="form-check-input me-2" onchange="copyLandline()">
+                        <label for="CopyLandline" class="form-check-label">Same as Emergency Landline</label>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row mb-3 d-flex align-items-end gap-3">
+                    <!-- Contact Person -->
+                    <div class="col-md-4">
+                        <label for="ContactPerson" class="form-label">Contact Person <span style="color: red;">*</span></label>
+                        <input type="text" id="ContactPerson" name="ContactPerson" class="form-control form-input"
+                               required value="@Model.ContactPerson">
+                        <small class="text-muted" style="font-size: 0.85em;">Enter the name of your emergency contact.</small>
+                        <small id="ContactPersonError" class="error-message" style="font-size: 0.85em;"></small>
+                    </div>
+
+                    <!-- Contact Number -->
+                    <div class="col-md-4">
+                        <label for="ContactNumber" class="form-label">Contact Number <span style="color: red;">*</span></label>
+                        <input type="tel" id="ContactNumber" name="ContactNumber" class="form-control form-input"
+                               required pattern="^\d{11}$" maxlength="11"
+                               title="Only numbers allowed. Must be 11 digits." value="@Model.ContactNumber">
+                        <small class="text-muted" style="font-size: 0.85em;">Enter an 11-digit emergency contact number.</small>
+                        <small id="ContactNumberError" class="error-message" style="font-size: 0.85em;"></small>
+                    </div>
+
+                    <!-- Relationship -->
+                    <div class="col-md-3">
+                        <label for="Relationship" class="form-label">Relationship <span style="color: red;">*</span></label>
+                        <input type="text" id="Relationship" name="Relationship" class="form-control form-input"
+                               required value="@Model.Relationship">
+                        <small class="text-muted" style="font-size: 0.75em;">Specify your relationship with the emergency contact.</small>
+                        <small id="RelationshipError" class="error-message" style="font-size: 0.75em;"></small>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <!-- Current Address Section -->
+            <div class="p-3 text-white rounded mb-3" style="background-color: #172154;">
+                <h6 class="fw-bold mb-0">Current Address</h6>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="HouseNo" class="form-label">House/Building No. <span style="color: red;">*</span></label>
+                    <input type="text" id="HouseNo" name="HouseNo" class="form-control" required value="@Model.HouseNo">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="Barangay" class="form-label">Barangay <span style="color: red;">*</span></label>
+                    <input type="text" id="Barangay" name="Barangay" class="form-control" required value="@Model.Barangay">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="Street" class="form-label">Street <span style="color: red;">*</span></label>
+                    <input type="text" id="Street" name="Street" class="form-control" required value="@Model.Street">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="Municipality" class="form-label">City/Municipality <span style="color: red;">*</span></label>
+                    <input type="text" id="Municipality" name="Municipality" class="form-control" required value="@Model.Municipality">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="Province" class="form-label">Province <span style="color: red;">*</span></label>
+                    <input type="text" id="Province" name="Province" class="form-control" required value="@Model.Province">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="ZipCode" class="form-label">ZIP Code <span style="color: red;">*</span></label>
+                    <input type="text" id="ZipCode" name="ZipCode" class="form-control" required
+                           pattern="\d{4}" maxlength="4" title="Enter a 4-digit ZIP code" value="@Model.ZipCode">
+                </div>
+            </div>
+
+            <!-- Checkbox to Copy Address -->
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="sameAddress" onchange="copyAddress()">
+                <label class="form-check-label" for="sameAddress">Same as Current Address</label>
+            </div>
+
+            <!-- Permanent Address Section -->
+            <div class="p-3 text-white rounded mb-3" style="background-color: #172154;">
+                <h6 class="fw-bold mb-0">Permanent Address</h6>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="PermanentHouseNo" class="form-label">House/Building No. <span style="color: red;">*</span></label>
+                    <input type="text" id="PermanentHouseNo" name="PermanentHouseNo" class="form-control" required value="@Model.PermanentHouseNo">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="PermanentBarangay" class="form-label">Barangay <span style="color: red;">*</span></label>
+                    <input type="text" id="PermanentBarangay" name="PermanentBarangay" class="form-control" required value="@Model.PermanentBarangay">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="PermanentStreet" class="form-label">Street <span style="color: red;">*</span></label>
+                    <input type="text" id="PermanentStreet" name="PermanentStreet" class="form-control" required value="@Model.PermanentStreet">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="PermanentMunicipality" class="form-label">City/Municipality <span style="color: red;">*</span></label>
+                    <input type="text" id="PermanentMunicipality" name="PermanentMunicipality" class="form-control" required value="@Model.PermanentMunicipality">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="PermanentProvince" class="form-label">Province <span style="color: red;">*</span></label>
+                    <input type="text" id="PermanentProvince" name="PermanentProvince" class="form-control" required value="@Model.PermanentProvince">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="PermanentZipCode" class="form-label">ZIP Code <span style="color: red;">*</span></label>
+                    <input type="text" id="PermanentZipCode" name="PermanentZipCode" class="form-control" required
+                           pattern="\d{4}" maxlength="4" title="Enter a 4-digit ZIP code" value="@Model.PermanentZipCode">
+                </div>
+            </div>
+
+
+            <div class="text-end mt-4">
+                <a href="@Url.Action("Index", "AdmissionPortal")"
+                   class="btn btn-secondary px-4 py-2 me-3">
+                    Back
+                </a>
+                <button type="submit" class="btn btn-primary px-4 py-2">
+                    Next
+                </button>
+            </div>
+        </div>
+    </form>
+
+
+    <script>
+               // Function to copy the Landline Number to Emergency Landline Number if checkbox is checked
+        function copyLandline() {
+            const landline = document.getElementById('LandlineNumber').value;
+            const emergencyLandline = document.getElementById('EmergencyLandlineNumber');
+            const checkbox = document.getElementById('CopyLandline');
+
+            if (checkbox.checked) {
+                emergencyLandline.value = landline;
+            } else {
+                emergencyLandline.value = ''; // Clear the Emergency Landline if unchecked
+            }
+        }
+
+        // Validate Landline Numbers (you can improve this function as needed)
+        function validateLandline(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            const pattern = new RegExp(input.pattern);
+
+            if (!pattern.test(input.value)) {
+                error.textContent = "Please enter a valid 8-digit number.";
+            } else {
+                error.textContent = ""; // Clear the error message
+            }
+        }
+
+              // Function to copy values from Current Address to Permanent Address when checkbox is checked
+             function copyAddress() {
+            const isChecked = document.getElementById("sameAddress").checked;
+
+            const fields = ["HouseNo", "Barangay", "Street", "Municipality", "Province", "ZipCode"];
+
+            fields.forEach(field => {
+                const currentField = document.getElementById(field);
+                const permanentField = document.getElementById("Permanent" + field);
+
+                if (isChecked) {
+                    permanentField.value = currentField.value;
+                } else {
+                    permanentField.value = "";
+                }
+            });
+        }
+    </script>
+}
+else
+{
+    <p class="text-danger">Error: Enrollment data is unavailable.</p>
+}

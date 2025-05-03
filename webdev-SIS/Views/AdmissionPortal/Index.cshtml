@@ -1,0 +1,403 @@
+﻿@model AdmissionEntity
+
+
+@{
+    Layout = "AdmissionLayout";
+    ViewData["Title"] = "Index";
+}
+
+<!-- Progress Steps -->
+<div class="form-progress">
+    <div class="progress-step active" id="createAccountStep">
+        <div class="progress-circle active">1</div>
+        <small>Create Account</small>
+    </div>
+    <div class="progress-step active" id="instructionsStep">
+        <div class="progress-circle active">2</div>
+        <small>Instructions</small>
+    </div>
+    <div class="progress-step active" id="personalInfoStep">
+        <div class="progress-circle active">3</div>
+        <small>Personal Information</small>
+    </div>
+    <div class="progress-step" id="contactStep">
+        <div class="progress-circle">4</div>
+        <small>Contact</small>
+    </div>
+    <div class="progress-step" id="familyStep">
+        <div class="progress-circle">5</div>
+        <small>Family</small>
+    </div>
+    <div class="progress-step" id="schoolStep">
+        <div class="progress-circle">6</div>
+        <small>School</small>
+    </div>
+    <div class="progress-step" id="finishStep">
+        <div class="progress-circle">7</div>
+        <small>Finish</small>
+    </div>
+</div>
+
+
+<hr />
+
+
+@if (Model != null)
+{
+    <form asp-controller="AdmissionPortal" asp-action="Index" method="post">
+        <div class="row mb-3 mt-3 align-items-end flex-grow-1 p-4 border rounded shadow-sm" style="background-color: #ffffff;">
+            <div class="card-body">
+                <!-- Name Fields -->
+                <div class="container mt-3">
+                    <div class="row">
+
+                        <div class="row mb-3 mt-2">
+                            <div class="p-3 text-white rounded mb-3" style="background-color: #172154;">
+                                <h6 class="fw-bold mb-0">Personal Information</h6>
+                            </div>
+
+                            <div class="row mb-4">
+                                <!-- First Name -->
+                                <div class="col-md-3">
+                                    <label for="FirstName" class="form-label">
+                                        First Name <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" id="FirstName" name="FirstName" class="form-control"
+                                           required pattern="^[A-Za-z]+(?: [A-Za-z]+)*$"
+                                           title="Only letters allowed. Spaces allowed for compound first names."
+                                           value="@Model.FirstName">
+                                    <small class="text-danger" id="firstNameError"></small>
+                                    <small class="text-muted d-block" style="font-size: 10px;">
+                                        Your complete first name based on your PSA birth certificate.
+                                    </small>
+                                </div>
+
+                                <!-- Middle Name -->
+                                <div class="col-md-3">
+                                    <label for="MiddleName" class="form-label">
+                                        Middle Name <span class="text-secondary" style="font-size: 12px;">(Optional)</span>
+                                    </label>
+                                    <input type="text" id="MiddleName" name="MiddleName" class="form-control"
+                                           pattern="^[A-Za-z]+$"
+                                           title="Only letters allowed."
+                                           value="@Model.MiddleName">
+                                    <small class="text-danger" id="middleNameError"></small>
+                                    <small class="text-muted d-block" style="font-size: 10px;">
+                                        Your complete middle name based on your PSA birth certificate (Leave blank if not applicable).
+                                    </small>
+                                </div>
+
+                                <!-- Last Name -->
+                                <div class="col-md-3">
+                                    <label for="LastName" class="form-label">
+                                        Last Name <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" id="LastName" name="LastName" class="form-control"
+                                           required pattern="^[A-Za-z]+(?: [A-Za-z]+)*$"
+                                           title="Only letters allowed. Spaces allowed for compound last names."
+                                           value="@Model.LastName">
+                                    <small class="text-danger" id="lastNameError"></small>
+                                    <small class="text-muted d-block" style="font-size: 10px;">
+                                        Your complete last name based on your PSA birth certificate.
+                                    </small>
+                                </div>
+
+                                <!-- Suffix -->
+                                <div class="col-md-3">
+                                    <label for="Suffix" class="form-label">
+                                        Suffix <span class="text-secondary" style="font-size: 12px;">(Optional)</span>
+                                    </label>
+                                    <input type="text" id="Suffix" name="Suffix" class="form-control"
+                                           pattern="^[A-Za-z/-]+$"
+                                           title="Only letters, hyphens (-), and slashes (/) allowed."
+                                           value="@Model.Suffix">
+                                    <small class="text-danger" id="SuffixError"></small>
+                                    <small class="text-muted d-block" style="font-size: 10px;">
+                                        E.g., Jr., Sr., III, IV, Dela-Cruz, Reyes/Smith
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row mb-3 mt-4 align-items-end">
+                    <!-- Email Address -->
+                    <div class="col-md-3">
+                        <label for="Email" class="form-label">E-mail Address <span style="color: red;">*</span></label>
+                        <input type="email" id="Email" name="Email" class="form-control form-input" required title="Please enter a valid email address." value="@Model.Email">
+                        <small id="emailError" class="error-message"></small>
+                        <small class="text-muted" style="font-size: 10px;">Enter your active email address</small>
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div class="col-md-3">
+                        <label for="DateOfBirth" class="form-label">Date of Birth <span style="color: red;">*</span></label>
+                        <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control form-input" required
+                               max="2012-12-31">
+                        <small id="dobError" class="error-message"></small>
+                        <small class="text-muted" style="font-size: 10px;">Format: YYYY-MM-DD (Must be 2012 or earlier)</small>
+                    </div>
+
+                    <!-- Civil Status -->
+                    <div class="col-md-3">
+                        <label for="CivilStatus" class="form-label">Civil Status <span style="color: red;">*</span></label>
+                        <input type="text" id="CivilStatus" name="CivilStatus" class="form-control" value="@Model.CivilStatus" required>
+                        <small id="civilStatusError" class="error-message"></small>
+                        <small class="text-muted" style="font-size: 10px;">Enter your current civil status</small>
+                    </div>
+
+                    <!-- Sex -->
+                    <div class="col-md-3">
+                        <label for="sex" class="form-label">Sex <span style="color: red;">*</span></label>
+                        <select id="sex" name="Sex" class="form-select" required>
+                            <option value="">Select Sex</option>
+                            <option value="Male" selected="@(Model.Sex == "Male" ? "selected" : null)">Male</option>
+                            <option value="Female" selected="@(Model.Sex == "Female" ? "selected" : null)">Female</option>
+                        </select>
+                        <small class="text-muted" style="font-size: 10px;">Choose here</small>
+                    </div>
+                </div>
+
+                <div class="row mb-3 mt-5">
+                    <div class="p-3 text-white rounded mb-3" style="background-color: #172154;">
+                        <h6 class="fw-bold mb-0">Place of birth</h6>
+                    </div>
+
+                    <small class="text-muted d-inline ms-2">Select the place where you were born. For applicants born outside the Philippines, just enter the country.</small>
+                    <!-- Country -->
+                    <div class="col-md-4 mt-2">
+                        <label for="Country" class="form-label">Country <span style="color: red;">*</span></label>
+                        <select id="Country" name="Country" class="form-control" required>
+                            <option value="">-- Select Country --</option>
+                        </select>
+                    </div>
+
+                    <!-- Region -->
+                    <div class="col-md-4">
+                        <label for="Region" class="form-label">Region <span style="color: red;">*</span></label>
+                        <select id="Region" name="Region" class="form-control" required disabled>
+                            <option value="">-- Select Region --</option>
+                        </select>
+                    </div>
+                    <!-- City / Municipality -->
+                    <div class="col-md-4">
+                        <label for="City" class="form-label">City / Municipality <span style="color: red;">*</span></label>
+                        <select id="City" name="City" class="form-control" required disabled>
+                            <option value="">-- Select City / Municipality --</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="row mb-3 mt-5">
+                    <!-- Height -->
+                    <div class="col-md-3">
+                        <label for="Height" class="form-label">Height (cm) <span class="text-danger">*</span></label>
+                        <input type="text" id="Height" name="Height" class="form-control form-input" required
+                               value="@Model.Height">
+                        <small class="text-muted d-block small">Enter your height in centimeters.</small>
+                        <small id="heightError" class="error-message text-danger small"></small>
+                    </div>
+
+                    <!-- Weight -->
+                    <div class="col-md-3">
+                        <label for="Weight" class="form-label">Weight (kg) <span class="text-danger">*</span></label>
+                        <input type="text" id="Weight" name="Weight" class="form-control form-input" required
+                               value="@Model.Weight">
+                        <small class="text-muted d-block small">Enter your weight in kilograms.</small>
+                        <small id="weightError" class="error-message text-danger small"></small>
+                    </div>
+
+
+                    <!-- Religion -->
+                    <div class="col-md-3">
+                        <label for="Religion" class="form-label">Religion <span class="text-danger">*</span></label>
+                        <input type="text" id="Religion" name="Religion" class="form-control form-input" required value="@Model.Religion">
+                        <small class="text-muted d-block small">Enter your religion.</small>
+                        <small id="religionError" class="error-message text-danger small"></small>
+                    </div>
+
+                    <!-- Disability -->
+                    <div class="col-md-3">
+                        <label for="Disability" class="form-label">
+                            Disability (if any) <span style="color: gray; font-size: smaller;">(Optional)</span>
+                        </label>
+                        <input type="text" id="Disability" name="Disability" class="form-control form-input" value="@Model.Disability">
+                        <small class="text-muted d-block small">Specify if you have any disability.</small>
+                        <small id="disabilityError" class="error-message text-danger small"></small>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- Back and Next Buttons -->
+        <div class="text-end mt-4">
+            <a href="@Url.Action("Start", "AdmissionPortal")"
+               class="btn btn-secondary px-4 py-2 me-3">
+                Back
+            </a>
+            <button type="submit" class="btn btn-primary px-4 py-2">
+                Next
+            </button>
+        </div>
+
+    </form>
+}
+else
+{
+    <p class="text-danger">Error: Enrollment data is unavailable.</p>
+}
+
+
+            <script>
+                 window.onload = function () {
+                        let dateInput = document.getElementById("DateOfBirth");
+
+                        // If no value is set, default to 2012-01-01
+                        if (!dateInput.value) {
+                            dateInput.value = "2012-01-01";
+                        }
+                 };
+
+
+                   // Restriction for height and weight (prevents letters and limits to digits with up to 2 decimals)
+                function validateInput(id, errorId) {
+                    const input = document.getElementById(id);
+                    const error = document.getElementById(errorId);
+                    const value = input.value;
+
+                    // Allows 1 to 3 digits, optional decimal, and up to 2 decimal digits
+                    const regex = /^\d{1,3}(\.\d{1,2})?$/;
+
+                    if (!regex.test(value)) {
+                        error.textContent = "Only up to 3 digits before decimal and 2 after are allowed.";
+                    } else {
+                        error.textContent = "";
+                    }
+                }
+
+                // Validate input on change
+                document.getElementById("Height").addEventListener("input", function () {
+                    validateInput("Height", "heightError");
+                });
+
+                document.getElementById("Weight").addEventListener("input", function () {
+                    validateInput("Weight", "weightError");
+                });
+
+                // Restrict input to only allow numeric values (up to 3 digits and optional decimal), block letters and restrict to 3 digits
+                document.getElementById("Height").addEventListener("keypress", function (e) {
+                    const value = e.target.value;
+                    // Allow only digits or a single decimal point, and prevent more than 3 digits before the decimal
+                    if (!/[\d.]/.test(e.key) || (value.length >= 3 && e.key !== ".")) {
+                        e.preventDefault();  // Prevent the input if it's not a digit or decimal
+                    }
+                });
+
+                document.getElementById("Weight").addEventListener("keypress", function (e) {
+                    const value = e.target.value;
+                    // Allow only digits or a single decimal point, and prevent more than 3 digits before the decimal
+                    if (!/[\d.]/.test(e.key) || (value.length >= 3 && e.key !== ".")) {
+                        e.preventDefault();  // Prevent the input if it's not a digit or decimal
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+
+                 //API for country, region and city/municipality
+                function loadCountries() {
+                    const countrySelect = document.getElementById("Country");
+                    countrySelect.innerHTML = `<option value="">-- Select Country --</option>`;
+                    const countries = ["Philippines", "United States", "Canada", "Others"];
+                    countries.forEach(country => {
+                        const option = document.createElement("option");
+                        option.value = country;
+                        option.textContent = country;
+                        countrySelect.appendChild(option);
+                    });
+                }
+
+                function loadRegions() {
+                    fetch("https://psgc.gitlab.io/api/regions/")
+                        .then(res => res.json())
+                        .then(data => {
+                            const regionSelect = document.getElementById("Region");
+                            regionSelect.innerHTML = `<option value="">-- Select Region --</option>`;
+                            data.forEach(region => {
+                                const option = document.createElement("option");
+                                option.value = region.name; // submitted value
+                                option.textContent = region.name;
+                                option.setAttribute("data-code", region.code); // store code for lookup
+                                regionSelect.appendChild(option);
+                            });
+                        });
+                }
+
+                function loadCities(regionCode) {
+                    fetch(`https://psgc.gitlab.io/api/regions/${regionCode}/cities-municipalities/`)
+                        .then(res => res.json())
+                        .then(data => {
+                            const citySelect = document.getElementById("City");
+                            citySelect.innerHTML = `<option value="">-- Select City / Municipality --</option>`;
+                            data.forEach(city => {
+                                const option = document.createElement("option");
+                                option.value = city.name;
+                                option.textContent = city.name;
+                                citySelect.appendChild(option);
+                            });
+                        });
+                }
+
+                // Event handlers (include this after defining the functions)
+                document.addEventListener("DOMContentLoaded", () => {
+                    loadCountries();
+
+                    const countrySelect = document.getElementById("Country");
+                    const regionSelect = document.getElementById("Region");
+                    const citySelect = document.getElementById("City");
+
+                    countrySelect.addEventListener("change", function () {
+                        const selectedCountry = this.value;
+
+                        if (selectedCountry === "Philippines") {
+                            regionSelect.disabled = false;
+                            citySelect.disabled = true;
+                            loadRegions();
+                        } else {
+                            regionSelect.innerHTML = `<option value="">-- Not Applicable --</option>`;
+                            regionSelect.disabled = true;
+
+                            citySelect.innerHTML = `<option value="">-- Not Applicable --</option>`;
+                            citySelect.disabled = true;
+                        }
+                    });
+
+                    regionSelect.addEventListener("change", function () {
+                        const selectedOption = this.options[this.selectedIndex];
+                        const regionCode = selectedOption.getAttribute("data-code");
+
+                        if (regionCode) {
+                            citySelect.disabled = false;
+                            loadCities(regionCode);
+                        } else {
+                            citySelect.innerHTML = `<option value="">-- Select Region First --</option>`;
+                            citySelect.disabled = true;
+                        }
+                    });
+                });
+
+
+
+            </script>

@@ -1,0 +1,78 @@
+﻿@model AdmissionEntity
+
+@{
+    Layout = "AdmissionLayout";
+    ViewData["Title"] = "Start";
+}
+
+<!-- Progress Steps -->
+<div class="form-progress">
+    <div class="progress-step active" id="createAccountStep">
+        <div class="progress-circle active">1</div>
+        <small>Create Account</small>
+    </div>
+    <div class="progress-step active" id="instructionsStep">
+        <div class="progress-circle active">2</div>
+        <small>Instructions</small>
+    </div>
+    <div class="progress-step" id="personalInfoStep">
+        <div class="progress-circle">3</div>
+        <small>Personal Information</small>
+    </div>
+    <div class="progress-step" id="contactStep">
+        <div class="progress-circle">4</div>
+        <small>Contact</small>
+    </div>
+    <div class="progress-step" id="familyStep">
+        <div class="progress-circle">5</div>
+        <small>Family</small>
+    </div>
+    <div class="progress-step" id="schoolStep">
+        <div class="progress-circle">6</div>
+        <small>School</small>
+    </div>
+    <div class="progress-step" id="finishStep">
+        <div class="progress-circle">7</div>
+        <small>Finish</small>
+    </div>
+</div>
+
+
+<hr/>
+
+
+<div class="container d-flex gap-3 mt-3 mb-5 p-4">
+    <!-- Larger Section -->
+    <div class="flex-grow-1 p-4 border rounded shadow-sm" style="background-color: #ffffff;">
+        <div class="p-3 text-white rounded mb-3" style="background-color: #dc3545;">
+            <h6 class="fw-bold mb-0">Before you proceed...</h6>
+        </div>
+
+        <p>All information submitted must be truthful, accurate, and verifiable.</p>
+        <strong class="text-danger">Important: Any attempt to misrepresent, falsify, or alter information may result in delays in processing your admission from Laurelcrest Junior High School.</strong>
+    </div>
+
+
+    <div class="p-4 border rounded shadow-sm position-relative" style="width: 30%; background-color: #ffffff; min-height: 200px;">
+        <form asp-controller="AdmissionPortal" asp-action="Start" method="post">
+            <div class="col-md-12">
+                <label for="gradeLevelSmall" class="form-label">Grade Level to Enroll <span style="color: red;">*</span></label>
+                <select id="gradeLevelSmall" name="GradeLevel" class="form-select" required>
+                    <option value="" selected disabled>Select Grade Level</option>
+                    <option value="Grade 7" selected="@(Model.GradeLevel == "Grade 7" ? "selected" : null)">Grade 7</option>
+                    <option value="Grade 8" selected="@(Model.GradeLevel == "Grade 8" ? "selected" : null)">Grade 8</option>
+                    <option value="Grade 9" selected="@(Model.GradeLevel == "Grade 9" ? "selected" : null)">Grade 9</option>
+                    <option value="Grade 10" selected="@(Model.GradeLevel == "Grade 10" ? "selected" : null)">Grade 10</option>
+                </select>
+            </div>
+
+            <div class="position-absolute bottom-0 end-0 p-3">
+                <button type="submit" class="btn btn-primary" id="startButton">
+                    Next
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>

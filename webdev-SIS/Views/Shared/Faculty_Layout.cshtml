@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Faculty_Layout"] Faculty Portal</title>
+    <link rel="icon" href="~/images/logo.png" sizes="48x48">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/system_SIS.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .navbar-nav .nav-item .nav-link.active {
+            color: #1566FF;
+            font-weight: bold;
+        }
+    </style>
+
+
+</head>
+
+<body class="position-relative bg-image" style="background-image: url('./images/bgjr.png'); background-position: center; background-color: rgba(0, 0, 0, 0.3); font-family: 'Poppins', sans-serif; background-size: cover; overflow-x: hidden; margin-bottom: 90px; padding-top: 120px;">
+    <header class="bg-white" style="border-radius: 10px; width: 100%">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm mb-3 fixed-top">
+            <div class="container-fluid">
+                <!-- Logo -->
+                <img src="~/images/logo.png" alt="Admin Portal Logo" class="img-fluid" style="height: 90px;" />
+
+                <!-- Hamburger Menu for Mobile -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navigation Links -->
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item me-3">
+                            <a class="nav-link @(ViewData["ActiveMenu"]?.ToString() == "Home" || ViewData["ActiveMenu"] == null ? "active fw-bold" : "")" asp-area="" asp-controller="FacultyPortal" asp-action="Index">
+                                <i class="fas fa-house"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link @(ViewData["ActiveMenu"]?.ToString() == "Subject" ? "active fw-bold" : "")" asp-area="" asp-controller="FacultyPortal" asp-action="Subject">
+                                <i class="fas fa-book-open"></i> Subject
+                            </a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link @(ViewData["ActiveMenu"]?.ToString() == "MasterList" ? "active fw-bold" : "")" asp-area="" asp-controller="FacultyPortal" asp-action="MasterList">
+                                <i class="fas fa-users"></i> Master List
+                            </a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link @(ViewData["ActiveMenu"]?.ToString() == "Grades" ? "active fw-bold" : "")" asp-area="" asp-controller="FacultyPortal" asp-action="Grades">
+                                <i class="fas fa-star"></i> Grades
+                            </a>
+                        </li>
+
+                        <li class="nav-item me-3">
+                            <a class="nav-link @(ViewData["ActiveMenu"]?.ToString() == "Forms" ? "active fw-bold" : "")" asp-area="" asp-controller="FacultyPortal" asp-action="Forms">
+                                <i class="fas fa-clipboard-list"></i> Forms
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- User Info -->
+                    <a asp-controller="FacultyPortal" asp-action="Profile" class="text-decoration-none">
+                        <div class="d-flex align-items-center">
+                            <img src="~/images/profile-placeholder.png" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;" />
+                            <div>
+                                <p class="mb-0 fw-semibold text-primary">[NAME]</p>
+                                <p class="mb-0 small text-info">Faculty</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted">
+        <div>
+            &copy; 2025 - system_SIS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

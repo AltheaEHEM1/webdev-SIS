@@ -1,0 +1,186 @@
+﻿@{
+    Layout = "Faculty_Layout";  // Specifies the layout to use
+    ViewData["Title"] = "Home Page";
+}
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; margin: 0;">
+
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png"
+         alt="Decorative background representing Grade 7"
+         class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <!-- Main Content -->
+    <div class="container-fluid p-3" style="background-color: rgba(220, 232, 253, 0.9); border-radius: 10px;">
+        <section class="fixed ml-72 px-11 py-6 w-full top-20 left-0" style="font-weight: bold;">
+            <div class="d-flex align-items-center justify-content-between">
+                <!-- Text and Link -->
+                <p class="text-sm text-black fs-5">
+                    <i class="fas fa-user-check text-black"></i>
+                    <a asp-controller="FacultyPortal" asp-action="Index" class="text-black" style="text-decoration: none;">Class Advisory</a>
+                </p>
+                <!-- Ellipsis Dropdown -->
+                <div class="dropdown">
+                    <button class="btn btn-link p-0 text-dark rounded-circle bg-light"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <li>
+                            <a class="dropdown-item @(ViewData["ActiveMenu"]?.ToString() == "EncodeGrades" ? "active fw-bold" : "")"
+                               asp-area="" asp-controller="FacultyPortal" asp-action="EncodeGrades">
+                                <i class="fas fa-clipboard-list"></i> Encode Grades
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item @(ViewData["ActiveMenu"]?.ToString() == "ChangeRG" ? "active fw-bold" : "")"
+                               asp-area="" asp-controller="FacultyPortal" asp-action="ChangeRG">
+                                <i class="fas fa-clipboard-list"></i> Change of Grades
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+
+        <div class="container">
+            <div class="row mb-2">
+                <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                    <!-- Encoding Grade Status -->
+                    <h6 class="me-2 custom-font">
+                        <strong>Encoding Grade Status:</strong>
+                        <span>Closed</span>
+                    </h6>
+                    <!-- Subject -->
+                    <h6 class="me-2 custom-font">
+                        <strong>Subject:</strong>
+                        <span>Araling Panlipunan</span>
+                    </h6>
+                    <!-- Section -->
+                    <h6 class="custom-font">
+                        <strong>Section:</strong>
+                        <span>Mars</span>
+                    </h6>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12 d-flex flex-wrap align-items-center">
+                    <!-- Grade Level -->
+                    <h6 class="me-2 custom-font">
+                        <strong>Grade Level:</strong>
+                        <span>7</span>
+                    </h6>
+                </div>     
+            </div>
+
+
+            <!-- Table Section -->
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="background-color: #162051; color: white; border-top-left-radius: 10px;">LRN</th>
+                            <th style="background-color: #162051; color: white;">Student Name</th>
+                            <th style="background-color: #162051; color: white;">1st Quarter</th>
+                            <th style="background-color: #162051; color: white;">2nd Quarter</th>
+                            <th style="background-color: #162051; color: white;">3rd Quarter</th>
+                            <th style="background-color: #162051; color: white;">4th Quarter</th>
+                            <th style="background-color: #162051; color: white;">Final Grade</th>
+                            <th style="background-color: #162051; color: white; border-top-right-radius: 10px;">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <!-- LRN as a read-only display -->
+                            <td>
+                                <span>523049392859</span>
+                            </td>
+                            <td>Aspen, Abigail Reyes Sr.</td>
+                            <td>
+                                <input type="text" style="width: 90px;" class="form-control" maxlength="3" data-grade="true" oninput="validateGrade(this)">
+                            </td>
+                            <td>
+                                <input type="text" style="width: 90px;" class="form-control" maxlength="3" data-grade="true" oninput="validateGrade(this)">
+                            </td>
+                            <td>
+                                <input type="text" style="width: 90px;" class="form-control" maxlength="3" data-grade="true" oninput="validateGrade(this)">
+                            </td>
+                            <td>
+                                <input type="text" style="width: 90px;" class="form-control" maxlength="3" data-grade="true" oninput="validateGrade(this)">
+                            </td>
+                            <td class="final-grade">-</td>
+                            <td class="remark">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Validate Grade Input and Recalculate Final Grade
+function validateGrade(input) {
+    const value = input.value;
+
+    // Allow only two-digit or three-digit integers (65-100)
+    if (!/^\d{1,3}$/.test(value) || parseInt(value) > 100 || parseInt(value) < 65) {
+        input.classList.add("is-invalid");
+    } else {
+        input.classList.remove("is-invalid");
+    }
+
+    // Recalculate the final grade for the row
+    recalculateFinalGrade(input.closest("tr"));
+}
+
+// Function to recalculate final grade and remark
+function recalculateFinalGrade(row) {
+    const gradeInputs = row.querySelectorAll("input[data-grade]");
+    let total = 0;
+    let count = 0;
+
+    // Check if each quarter's input is valid and not empty
+    let isValid = true;
+    gradeInputs.forEach((input, index) => {
+        const value = parseInt(input.value, 10);
+        if (!isNaN(value)) {
+            total += value;
+            count++;
+        } else if (input.value === "") {
+            // If a grade is missing, disable the next quarter input
+            disableNextQuarters(gradeInputs, index);
+        }
+    });
+
+    // Calculate the final grade (sum of all grades divided by 4)
+    const finalGrade = count === 4 ? (total / 4).toFixed(2) : "-";
+    const finalGradeCell = row.querySelector(".final-grade");
+    const remarkCell = row.querySelector(".remark");
+
+    // Update Final Grade Cell
+    finalGradeCell.textContent = finalGrade !== "-" ? finalGrade : "-";
+
+    // Update Remark Cell
+    if (finalGrade !== "-" && finalGrade >= 75) {
+        remarkCell.textContent = "Passed";
+        remarkCell.style.color = "green";
+    } else if (finalGrade !== "-" && finalGrade < 75) {
+        remarkCell.textContent = "Failed";
+        remarkCell.style.color = "red";
+    } else {
+        remarkCell.textContent = "-";
+        remarkCell.style.color = "black";
+    }
+}
+
+s
+    </script>
+</body>

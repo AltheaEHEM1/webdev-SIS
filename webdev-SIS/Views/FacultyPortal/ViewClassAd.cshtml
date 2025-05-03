@@ -1,0 +1,337 @@
+﻿@{
+    Layout = "Faculty_Layout";  // Specifies the layout to use
+    ViewData["Title"] = "Home Page";
+}
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; margin: 0;">
+
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png"
+         alt="Decorative background representing Grade 7"
+         class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <!-- Main Content -->
+    <div class="container-fluid p-3" style="background-color: rgba(220, 232, 253, 0.9); border-radius: 10px;">
+        <section class="fixed ml-72 px-11 py-6 w-full top-20 left-0" style="font-weight: bold;">
+            <p class="text-sm text-black fs-5">
+                <i class="fas fa-user-check text-black"></i>
+                <a asp-controller="FacultyPortal" asp-action="Index" class="text-black" style="text-decoration: none;">Class Advisory</a>
+            </p>
+        </section>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4>Grade 7 - Mars | S.Y. 2019-2020</h4>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-between mb-3">
+                <div style="flex: 1;">
+                    <div style="display: block; margin-bottom: 5px;">
+                        <p style="display: inline; margin-right: 5px;"><strong>Class Adviser:</strong></p>
+                        <p style="display: inline;">Althea Asis</p>
+                    </div>
+                    <div style="display: block;">
+                        <p style="display: inline; margin-right: 5px;"><strong>No. of Student:</strong></p>
+                        <p style="display: inline;">10</p>
+                    </div>
+                </div>
+
+                <div style="flex: 1; text-align: right;">
+                    <div style="display: block; margin-bottom: 5px;">
+                        <p style="display: inline; margin-right: 5px;"><strong>Program</strong></p>
+                        <p style="display: inline;">Regular</p>
+                    </div>
+                    <a class="btn @(string.Equals(ViewData["ActiveMenu"]?.ToString(), "ClassAdvisory", StringComparison.OrdinalIgnoreCase) ? "fw-bold text-white" : "btn-outline-primary fw-bold")"
+                       style="@(string.Equals(ViewData["ActiveMenu"]?.ToString(), "ClassAdvisory", StringComparison.OrdinalIgnoreCase) ? "background-color: #4E73DF;" : "")"
+                       asp-area=""
+                       asp-controller="FacultyPortal"
+                       asp-action="ListReportCard">
+                        Grades Report
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-responsive mt-2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="background-color: #162051; color: white; border-top-left-radius: 10px;">LRN</th>
+                            <th style="background-color: #162051; color: white;">Student Name</th>
+                            <th style="background-color: #162051; color: white;">Gender</th>
+                            <th style="background-color: #162051; color: white;">Status</th>
+                            <th style="background-color: #162051; color: white; border-top-right-radius: 10px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>406494150200</td>
+                            <td>Nadine Borja</td>
+                            <td>Female</td>
+                            <td>No Status</td>
+                            <td>
+                                <!-- Dropdown for additional actions -->
+                                <div class="dropdown">
+                                    <button class="btn btn-light btn-sm dropdown-toggle"
+                                            type="button"
+                                            id="dropdownMenuButton"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                            style="border: none; background: none;">
+                                        <i class="fas fa-ellipsis-v"></i> <!-- Ellipsis icon -->
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                        <!-- Report Card link -->
+                                        <li>
+                                            <button class="dropdown-item"
+                                                    type="button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#reportCardModal">
+                                                <i class="fas fa-file-alt me-2"></i> Report Card
+                                            </button>
+                                        </li>
+                                        <!-- View Student link -->
+                                        <li>
+                                            <button class="dropdown-item"
+                                                    type="button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#ViewStudent">
+                                                <i class="fas fa-user me-2"></i> View Student
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Card Modal -->
+    <div class="modal fade" id="reportCardModal" tabindex="-1" aria-labelledby="reportCardLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="reportCardLabel">Student Grade Report</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-wrap justify-content-between mb-3">
+                        <div style="flex: 1;">
+                            <div style="display: block; margin-bottom: 5px;">
+                                <p style="display: inline; margin-right: 5px;"><strong> Learner Reference Number:</strong></p>
+                                <p style="display: inline;">406494150200</p>
+                            </div>
+                            <div style="display: block;">
+                                <p style="display: inline; margin-right: 5px;"><strong>Student Name:</strong></p>
+                                <p style="display: inline;">Joshua Cuerdo</p>
+                            </div>
+                        </div>
+
+                        <div style="flex: 1; text-align: right;">
+                            <div>
+                                <a asp-controller="FacultyStudentGradeReport"
+                                   asp-action="GeneratePdfGrade"
+                                   class="dropdown-item"
+                                   style="color: #007bff;">
+                                    PDF File
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="table-secondary text-white">
+                                <tr>
+                                    <th>Learning Areas</th>
+                                    <th>1st Quarter</th>
+                                    <th>2nd Quarter</th>
+                                    <th>3rd Quarter</th>
+                                    <th>4th Quarter</th>
+                                    <th>Final Grade</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Filipino</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>English</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Mathematics</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Science</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Araling Panlipunan(AP)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Edukasyon sa Pagpapakatao(Esp)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Technology and Livelihood Education(TLE)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>MAPEH</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Finalize Grade Status</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Student Modal -->
+    <div class="modal fade" id="ViewStudent" tabindex="-1" aria-labelledby="ViewStudentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title d-flex align-items-center" id="ViewStudentLabel">
+                        <span contenteditable="true">Edit Student Personal Data</span>
+                        <i class="bi bi-pencil ms-2"></i>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Student Information -->
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>LRN:</strong></label>
+                                <label class="form-label me-3"><strong>406494150200</strong></label>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Admission Status:</strong></label>
+                                <label class="form-label me-3"><strong>Regular:</strong></label>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Student Name:</strong></label>
+                                <p class="mb-0 me-2 border rounded px-2" contenteditable="true">Brooke, Alexander Cruz</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Gender:</strong></label>
+                                <div class="d-flex align-items-center">
+                                    <select class="form-control me-2" style="width: auto;">
+                                        <option selected>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                    <i class="bi bi-caret-down ms-2 text-black"></i>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Date of Birth:</strong></label>
+                                <input type="date" class="form-control me-2" value="2000-12-26" style="width: auto;">
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Place of Birth:</strong></label>
+                                <p class="mb-0 me-2 border rounded px-2" contenteditable="true">Pasay City, Metro Manila</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Mobile No.:</strong></label>
+                                <p class="mb-0 me-2 border rounded px-2" contenteditable="true">9244316177</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Email Address:</strong></label>
+                                <p class="mb-0 me-2 border rounded px-2" contenteditable="true">alexander@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <!-- Guardian Information -->
+                        <div class="col-md-6 col-12 mb-3">
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Parent/Guardian 1 Name:</strong></label>
+                                <p class="mb-0 me-2 border rounded px-2" contenteditable="true">Mendoza, Isabella Cruz (Father)</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Parent/Guardian 1 Contact:</strong></label>
+                                <p class="mb-0 me-2 border rounded px-2" contenteditable="true">9424501596</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Parent/Guardian 2 Name:</strong></label>
+                                <p class="mb-0 me-2 border rounded px-2" contenteditable="true">Not specified</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Parent/Guardian 2 Contact:</strong></label>
+                                <p class="mb-0 me-2 border rounded px-2" contenteditable="true">Not specified</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Current Address:</strong></label>
+                                <p class="mb-0 me-2 border rounded px-2" contenteditable="true">202 Aguinaldo St., Santo Niño, Pasay, Rizal, CAR, 1004</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label me-3"><strong>Residence Type:</strong></label>
+                                <p class="mb-0 me-2 border rounded px-2" contenteditable="true">Rent</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>

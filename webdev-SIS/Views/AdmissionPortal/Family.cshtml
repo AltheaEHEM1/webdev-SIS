@@ -1,0 +1,136 @@
+﻿@model AdmissionEntity
+@{
+    Layout = "AdmissionLayout";  // Specifies the layout to use
+    ViewData["Title"] = "Family";
+}
+<!-- Progress Steps -->
+<div class="form-progress">
+    <div class="progress-step active" id="createAccountStep">
+        <div class="progress-circle active">1</div>
+        <small>Create Account</small>
+    </div>
+    <div class="progress-step active" id="instructionsStep">
+        <div class="progress-circle active">2</div>
+        <small>Instructions</small>
+    </div>
+    <div class="progress-step active" id="personalInfoStep">
+        <div class="progress-circle active">3</div>
+        <small>Personal Information</small>
+    </div>
+    <div class="progress-step active" id="contactStep">
+        <div class="progress-circle active">4</div>
+        <small>Contact</small>
+    </div>
+    <div class="progress-step active" id="familyStep">
+        <div class="progress-circle active">5</div>
+        <small>Family</small>
+    </div>
+    <div class="progress-step" id="schoolStep">
+        <div class="progress-circle">6</div>
+        <small>School</small>
+    </div>
+    <div class="progress-step" id="finishStep">
+        <div class="progress-circle">7</div>
+        <small>Finish</small>
+    </div>
+</div>
+<hr />
+
+@if (Model != null)
+{
+    <form asp-controller="AdmissionPortal" asp-action="Family" method="post">
+        <div class="container mt-4 row mb-3 mt-3 align-items-end flex-grow-1 p-4 border rounded shadow-sm" style="background-color: #ffffff;">
+            <!-- Primary Guardian Section -->
+            <div class="p-3 text-white rounded mb-3" style="background-color: #172154;">
+                <h6 class="fw-bold mb-0">Parent / Guardian's Name</h6>
+            </div>
+            <div class="row mb-5">
+                <!-- Parent First Name -->
+                <div class="col-md-4">
+                    <label for="ParentFirstName" class="form-label">Parent First Name <small style="color: red;">*</small></label>
+                    <input type="text" id="ParentFirstName" name="ParentFirstName"
+                           class="form-control form-input" required value="@Model.ParentFirstName">
+                </div>
+
+                <!-- Maiden Name -->
+                <div class="col-md-4">
+                    <label for="ParentMiddleName" class="form-label">Middle Name <small style="color: gray;">Optional</small></label>
+                    <input type="text" id="ParentMiddleName" name="ParentMiddleName"
+                           class="form-control form-input" value="@Model.ParentMiddleName">
+                </div>
+
+                <!-- Parent Last Name -->
+                <div class="col-md-4">
+                    <label for="ParentLastName" class="form-label">Parent Last Name <small style="color: red;">*</small></label>
+                    <input type="text" id="ParentLastName" name="ParentLastName"
+                           class="form-control form-input" required value="@Model.ParentLastName">
+                </div>
+
+                <!-- Parent Contact No -->
+                <div class="col-md-4">
+                    <label for="ParentContactNo" class="form-label">Primary Parent Contact No <small style="color: red;">*</small></label>
+                    <input type="tel" id="ParentContactNo" name="ParentContactNo"
+                           class="form-control form-input" required pattern="^\d{11}$"
+                           title="Contact number must be exactly 11 digits." value="@Model.ParentContactNo">
+                </div>
+
+                <!-- Parent Relationship -->
+                <div class="col-md-4">
+                    <label for="ParentRelationship" class="form-label">Primary Parent Relationship <small style="color: red;">*</small></label>
+                    <input type="text" id="ParentRelationship" name="ParentRelationship"
+                           class="form-control form-input" required value="@Model.ParentRelationship">
+                </div>
+            </div>
+
+            <!-- Secondary Guardian's Information -->
+            <div class="p-3 text-white rounded mb-3" style="background-color: #172154;">
+                <h6 class="fw-bold mb-0">Secondary Guardian's Information</h6>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="GuardianFirstName" class="form-label">First Name <small style="color: gray;">(Optional)</small></label>
+                    <input type="text" id="GuardianFirstName" name="GuardianFirstName"
+                           class="form-control form-input" value="@Model.GuardianFirstName">
+                </div>
+                <div class="col-md-4">
+                    <label for="GuardianMiddleName" class="form-label">Middle Name <small style="color: gray;">(Optional)</small></label>
+                    <input type="text" id="GuardianMiddleName" name="GuardianMiddleName"
+                           class="form-control form-input" value="@Model.GuardianMiddleName">
+                </div>
+                <div class="col-md-4">
+                    <label for="GuardianLastName" class="form-label">Last Name <small style="color: gray;">(Optional)</small></label>
+                    <input type="text" id="GuardianLastName" name="GuardianLastName"
+                           class="form-control form-input" value="@Model.GuardianLastName">
+                </div>
+                <div class="col-md-4">
+                    <label for="GuardianContactNo" class="form-label">Contact Number <small style="color: gray;">(Optional)</small></label>
+                    <input type="tel" id="GuardianContactNo" name="GuardianContactNo"
+                           class="form-control form-input" pattern="^\d{11}$"
+                           title="Contact number must be exactly 11 digits." value="@Model.GuardianContactNo">
+                </div>
+                <div class="col-md-4">
+                    <label for="GuardianRelationship" class="form-label">Relationship <small style="color: gray;">(Optional)</small></label>
+                    <input type="text" id="GuardianRelationship" name="GuardianRelationship"
+                           class="form-control form-input" value="@Model.GuardianRelationship">
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Back and Next Buttons -->
+        <div class="text-end">
+            <a href="@Url.Action("Contact", "AdmissionPortal")"
+               class="btn btn-secondary px-4 py-2 me-3">
+                Back
+            </a>
+            <button type="submit" class="btn btn-primary px-4 py-2">
+                Next
+            </button>
+        </div>
+    </form>
+}
+else
+{
+    <p class="text-danger">Error: Enrollment data is unavailable.</p>
+}

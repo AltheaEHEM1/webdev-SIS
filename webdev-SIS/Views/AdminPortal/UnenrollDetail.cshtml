@@ -1,0 +1,182 @@
+﻿@model IEnumerable<UnenrollEntity>
+
+@{
+    Layout = "Admin_Layout";
+    ViewData["Title"] = "Unenrolled Students Details";
+}
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; width: 100vw; margin: 0;">
+    <img src="~/images/bgjr.png" alt="Decorative background" class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <div style="background-color: rgba(220, 232, 253, 0.9); padding: 20px; border-radius: 10px;">
+        <section class="fixed ml-72 px-11 py-6 w-full top-20 left-0" style="font-weight: bold;">
+            <p class="text-sm text-black fs-5">
+                <i class="fas fa-user text-black"></i>
+                <a asp-controller="AdminPortal" asp-action="UnenrollDetail" class="text-black" style="text-decoration: none;">Review Unenrolled Student</a>
+            </p>
+        </section>
+
+        <div class="container mt-2">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var unenrolldetail in Model) // ✅ Loop through the list
+                {
+                    <div class="container">
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                                        Incoming
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Grade Level:</strong></div>
+                                            <div class="col-8">@unenrolldetail.GradeLevel</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-4">
+                                    <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                                        Personal Information
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Full Name:</strong></div>
+                                            <div class="col-8">@($"{unenrolldetail.FirstName} {unenrolldetail.MiddleName} {unenrolldetail.LastName} {unenrolldetail.Suffix}")</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Email:</strong></div>
+                                            <div class="col-8">@unenrolldetail.Email</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Date of Birth:</strong></div>
+                                            <div class="col-8">@unenrolldetail.DateOfBirth.ToShortDateString()</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4"><strong>Civil Status:</strong></div>
+                                            <div class="col-md-8">@unenrolldetail.CivilStatus</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Sex:</strong></div>
+                                            <div class="col-md-8">@unenrolldetail.Sex</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Country:</strong></div>
+                                            <div class="col-md-8">@unenrolldetail.Country</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Region:</strong></div>
+                                            <div class="col-md-8">@unenrolldetail.Region</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>City / Municipality:</strong></div>
+                                            <div class="col-md-8">@unenrolldetail.City</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Height:</strong>Height:</div>
+                                            <div class="col-md-8">@unenrolldetail.Height</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Weight:</strong></div>
+                                            <div class="col-md-8">@unenrolldetail.Weight</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Religion:</strong></div>
+                                            <div class="col-md-8">@unenrolldetail.Religion</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Disability:</strong></div>
+                                            <div class="col-md-8">@unenrolldetail.Disability</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-4">
+                                    <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                                        Contact
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Landline:</strong></div>
+                                            <div class="col-md-8">@unenrolldetail.Landline_number</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Phone:</strong></div>
+                                            <div class="col-8">@unenrolldetail.Phone_number</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4 fw-bold">Emergency Contact:</div>
+                                            <div class="col-md-8">@unenrolldetail.ContactPerson - @unenrolldetail.ContactNumber (@unenrolldetail.Relationship)</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4 fw-bold"> <strong>Emergency Landline:</strong></div>
+                                            <div class="col-md-8">@unenrolldetail.Emergency_landline_number</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                                        Address
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Current:</strong></div>
+                                            <div class="col-8">@($"{unenrolldetail.HouseNo}, {unenrolldetail.Street}, {unenrolldetail.Barangay}, {unenrolldetail.Municipality}, {unenrolldetail.Province}, {unenrolldetail.ZipCode}")</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Permanent:</strong></div>
+                                            <div class="col-8">@($"{unenrolldetail.PermanentHouseNo}, {unenrolldetail.PermanentStreet}, {unenrolldetail.PermanentBarangay}, {unenrolldetail.PermanentMunicipality}, {unenrolldetail.PermanentProvince}, {unenrolldetail.PermanentZipCode}")</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-4">
+                                    <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                                        Family
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Parent:</strong></div>
+                                            <div class="col-8">@($"{unenrolldetail.ParentFirstName} {unenrolldetail.ParentMiddleName} {unenrolldetail.ParentLastName} - {unenrolldetail.ParentContactNo} ({unenrolldetail.ParentRelationship})")</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Guardian:</strong></div>
+                                            <div class="col-8">@($"{unenrolldetail.GuardianFirstName} {unenrolldetail.GuardianMiddleName} {unenrolldetail.GuardianLastName} {unenrolldetail.GuardianContactNo} ({unenrolldetail.GuardianRelationship})")</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="card mb-4">
+                                    <div class="card-header text-white fw-bold" style="background-color: #172154;">School</div>
+                                    <div class="card-body p-3">
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">School Name:</div><div class="col-md-8">@unenrolldetail.SchoolName</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">School Address:</div><div class="col-md-8">@unenrolldetail.SchoolAddress</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">School Contact:</div><div class="col-md-8">@unenrolldetail.SchoolContact</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">School Type:</div><div class="col-md-8">@unenrolldetail.SchoolType</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">Year Of Graduation:</div><div class="col-md-8">@unenrolldetail.YearOfGraduation</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">LRN:</div><div class="col-md-8">@unenrolldetail.LRN</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">GWA:</div><div class="col-md-8">@unenrolldetail.GWA</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+                }
+            }
+            else
+            {
+                <p class="text-center text-muted">No admissions found.</p>
+            }
+        </div>
+    </div>
+
+
+</body>

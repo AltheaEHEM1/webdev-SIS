@@ -1,0 +1,264 @@
+﻿@* @model IEnumerable<StudentEntity> *@
+@* @{ *@
+@*     Layout = "Admin_Layout"; // Specifies the layout to use *@
+@*     ViewData["Title"] = "Grade 7 Page"; // Ensure the title is descriptive *@
+@* } *@
+
+@* <body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; width: 100vw; margin: 0;"> *@
+@*     <!-- Background Image --> *@
+@*     <img src="~/images/bgjr.png" *@
+@*          alt="Decorative background representing Grade 7" *@
+@*          class="img-fluid w-100" *@
+@*          style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;"> *@
+
+
+@*     <!-- Main Content --> *@
+@*     <div style="background-color: rgba(220, 232, 253, 0.9); padding: 20px; border-radius: 10px;"> *@
+@*         <section class="fixed ml-72 px-11 py-6 w-full top-20 left-0" style="font-weight: bold;"> *@
+@*             <div class="d-flex align-items-center"> *@
+@*                 <div> *@
+@*                     <i class="fas fa-home text-black fs-5"></i> *@
+@*                     <a asp-controller="AdminPortal" asp-action="EditInfo" class="text-black" style="text-decoration: none;">Edit Information</a> *@
+@*                     <span class="text-black"> / @ViewBag.GradeLevel / @ViewBag.SectionName</span> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </section> *@
+
+
+@* @if (Model != null) *@
+@* { *@
+@*     <form asp-controller="AdmissionPortal" asp-action="Index" method="post"> *@
+@*         <div class="row mb-3 mt-3 align-items-end flex-grow-1 p-4 border rounded shadow-sm" style="background-color: #ffffff;"> *@
+@*             <div class="card-body"> *@
+@*                 <!-- Name Fields --> *@
+@*                 <div class="container mt-3"> *@
+@*                     <div class="row"> *@
+
+@*                         <div class="row mb-3 mt-2"> *@
+@*                             <div class="p-3 text-white rounded mb-3" style="background-color: #172154;"> *@
+@*                                 <h6 class="fw-bold mb-0">Personal Information</h6> *@
+@*                             </div> *@
+
+@*                             <div class="row mb-4"> *@
+@*                                 <!-- First Name --> *@
+@*                                 <div class="col-md-3"> *@
+@*                                     <label for="FirstName" class="form-label"> *@
+@*                                         First Name <span class="text-danger">*</span> *@
+@*                                     </label> *@
+@*                                     <input type="text" id="FirstName" name="FirstName" class="form-control" *@
+@*                                            required pattern="^[A-Za-z]+(?: [A-Za-z]+)*$" *@
+@*                                            title="Only letters allowed. Spaces allowed for compound first names." *@
+@*                                            value="@Model.FirstName"> *@
+@*                                     <small class="text-danger" id="firstNameError"></small> *@
+@*                                     <small class="text-muted d-block" style="font-size: 10px;"> *@
+@*                                         Your complete first name based on your PSA birth certificate. *@
+@*                                     </small> *@
+@*                                 </div> *@
+
+@*                                 <!-- Middle Name --> *@
+@*                                 <div class="col-md-3"> *@
+@*                                     <label for="MiddleName" class="form-label"> *@
+@*                                         Middle Name <span class="text-secondary" style="font-size: 12px;">(Optional)</span> *@
+@*                                     </label> *@
+@*                                     <input type="text" id="MiddleName" name="MiddleName" class="form-control" *@
+@*                                            pattern="^[A-Za-z]+$" *@
+@*                                            title="Only letters allowed." *@
+@*                                            value="@Model.MiddleName"> *@
+@*                                     <small class="text-danger" id="middleNameError"></small> *@
+@*                                     <small class="text-muted d-block" style="font-size: 10px;"> *@
+@*                                         Your complete middle name based on your PSA birth certificate (Leave blank if not applicable). *@
+@*                                     </small> *@
+@*                                 </div> *@
+
+@*                                 <!-- Last Name --> *@
+@*                                 <div class="col-md-3"> *@
+@*                                     <label for="LastName" class="form-label"> *@
+@*                                         Last Name <span class="text-danger">*</span> *@
+@*                                     </label> *@
+@*                                     <input type="text" id="LastName" name="LastName" class="form-control" *@
+@*                                            required pattern="^[A-Za-z]+(?: [A-Za-z]+)*$" *@
+@*                                            title="Only letters allowed. Spaces allowed for compound last names." *@
+@*                                            value="@Model.LastName"> *@
+@*                                     <small class="text-danger" id="lastNameError"></small> *@
+@*                                     <small class="text-muted d-block" style="font-size: 10px;"> *@
+@*                                         Your complete last name based on your PSA birth certificate. *@
+@*                                     </small> *@
+@*                                 </div> *@
+
+@*                                 <!-- Suffix --> *@
+@*                                 <div class="col-md-3"> *@
+@*                                     <label for="Suffix" class="form-label"> *@
+@*                                         Suffix <span class="text-secondary" style="font-size: 12px;">(Optional)</span> *@
+@*                                     </label> *@
+@*                                     <input type="text" id="Suffix" name="Suffix" class="form-control" *@
+@*                                            pattern="^[A-Za-z/-]+$" *@
+@*                                            title="Only letters, hyphens (-), and slashes (/) allowed." *@
+@*                                            value="@Model.Suffix"> *@
+@*                                     <small class="text-danger" id="SuffixError"></small> *@
+@*                                     <small class="text-muted d-block" style="font-size: 10px;"> *@
+@*                                         E.g., Jr., Sr., III, IV, Dela-Cruz, Reyes/Smith *@
+@*                                     </small> *@
+@*                                 </div> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                 </div> *@
+
+
+@*                 <div class="row mb-3 mt-4 align-items-end"> *@
+@*                     <!-- Email Address --> *@
+@*                     <div class="col-md-3"> *@
+@*                         <label for="Email" class="form-label">E-mail Address <span style="color: red;">*</span></label> *@
+@*                         <input type="email" id="Email" name="Email" class="form-control form-input" required title="Please enter a valid email address." value="@Model.Email"> *@
+@*                         <small id="emailError" class="error-message"></small> *@
+@*                         <small class="text-muted" style="font-size: 10px;">Enter your active email address</small> *@
+@*                     </div> *@
+
+@*                     <!-- Date of Birth --> *@
+@*                     <div class="col-md-3"> *@
+@*                         <label for="DateOfBirth" class="form-label">Date of Birth <span style="color: red;">*</span></label> *@
+@*                         <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control form-input" required *@
+@*                                max="2012-12-31"> *@
+@*                         <small id="dobError" class="error-message"></small> *@
+@*                         <small class="text-muted" style="font-size: 10px;">Format: YYYY-MM-DD (Must be 2012 or earlier)</small> *@
+@*                     </div> *@
+
+@*                     <!-- Civil Status --> *@
+@*                     <div class="col-md-3"> *@
+@*                         <label for="CivilStatus" class="form-label">Civil Status <span style="color: red;">*</span></label> *@
+@*                         <input type="text" id="CivilStatus" name="CivilStatus" class="form-control" value="@Model.CivilStatus" required> *@
+@*                         <small id="civilStatusError" class="error-message"></small> *@
+@*                         <small class="text-muted" style="font-size: 10px;">Enter your current civil status</small> *@
+@*                     </div> *@
+
+@*                     <!-- Sex --> *@
+@*                     <div class="col-md-3"> *@
+@*                         <label for="sex" class="form-label">Sex <span style="color: red;">*</span></label> *@
+@*                         <select id="sex" name="Sex" class="form-select" required> *@
+@*                             <option value="">Select Sex</option> *@
+@*                             <option value="Male" selected="@(Model.Sex == "Male" ? "selected" : null)">Male</option> *@
+@*                             <option value="Female" selected="@(Model.Sex == "Female" ? "selected" : null)">Female</option> *@
+@*                         </select> *@
+@*                         <small class="text-muted" style="font-size: 10px;">Choose here</small> *@
+@*                     </div> *@
+@*                 </div> *@
+
+@*                 <div class="row mb-3 mt-5"> *@
+@*                     <div class="p-3 text-white rounded mb-3" style="background-color: #172154;"> *@
+@*                         <h6 class="fw-bold mb-0">Place of birth</h6> *@
+@*                     </div> *@
+
+@*                     <small class="text-muted d-inline ms-2">Select the place where you were born. For applicants born outside the Philippines, just enter the country.</small> *@
+@*                     <!-- Country --> *@
+@*                     <div class="col-md-4 mt-2"> *@
+@*                         <label for="Country" class="form-label">Country <span style="color: red;">*</span></label> *@
+@*                         <input type="text" id="Country" name="Country" class="form-control" required value="@(Model.Country ?? "")"> *@
+@*                         <small class="text-muted" style="font-size: 0.85em;">Enter the country of birth.</small> *@
+@*                         <small id="countryError" class="error-message" style="font-size: 0.85em;"></small> *@
+@*                     </div> *@
+
+@*                     <!-- Region --> *@
+@*                     <div class="col-md-4"> *@
+@*                         <label for="Region" class="form-label">Region <span style="color: red;">*</span></label> *@
+@*                         <input type="text" id="Region" name="Region" class="form-control" required value="@(Model.Region ?? "")"> *@
+@*                         <small class="text-muted" style="font-size: 0.85em;">Enter the region of birth.</small> *@
+@*                         <small id="regionError" class="error-message" style="font-size: 0.85em;"></small> *@
+@*                     </div> *@
+
+@*                     <!-- City / Municipality --> *@
+@*                     <div class="col-md-4"> *@
+@*                         <label for="City" class="form-label">City / Municipality <span style="color: red;">*</span></label> *@
+@*                         <input type="text" id="City" name="City" class="form-control" required value="@(Model.City ?? "")"> *@
+@*                         <small class="text-muted" style="font-size: 0.85em;">Enter the city or municipality of birth.</small> *@
+@*                         <small id="cityError" class="error-message" style="font-size: 0.85em;"></small> *@
+@*                     </div> *@
+@*                 </div> *@
+
+@*                 <div class="row mb-3 mt-5"> *@
+@*                     <!-- Height --> *@
+@*                     <div class="col-md-3"> *@
+@*                         <label for="Height" class="form-label">Height (cm) <span class="text-danger">*</span></label> *@
+@*                         <input type="number" id="Height" name="Height" class="form-control form-input" required min="30" max="250" step="0.1" title="Enter height in cm" value="@Model.Height"> *@
+@*                         <small class="text-muted d-block small">Enter your height in centimeters.</small> *@
+@*                         <small id="heightError" class="error-message text-danger small"></small> *@
+@*                     </div> *@
+
+@*                     <!-- Weight --> *@
+@*                     <div class="col-md-3"> *@
+@*                         <label for="Weight" class="form-label">Weight (kg) <span class="text-danger">*</span></label> *@
+@*                         <input type="number" id="Weight" name="Weight" class="form-control form-input" required min="10" max="500" step="0.1" title="Enter weight in kg" value="@Model.Weight"> *@
+@*                         <small class="text-muted d-block small">Enter your weight in kilograms.</small> *@
+@*                         <small id="weightError" class="error-message text-danger small"></small> *@
+@*                     </div> *@
+
+@*                     <!-- Religion --> *@
+@*                     <div class="col-md-3"> *@
+@*                         <label for="Religion" class="form-label">Religion <span class="text-danger">*</span></label> *@
+@*                         <input type="text" id="Religion" name="Religion" class="form-control form-input" required value="@Model.Religion"> *@
+@*                         <small class="text-muted d-block small">Enter your religion.</small> *@
+@*                         <small id="religionError" class="error-message text-danger small"></small> *@
+@*                     </div> *@
+
+@*                     <!-- Disability --> *@
+@*                     <div class="col-md-3"> *@
+@*                         <label for="Disability" class="form-label"> *@
+@*                             Disability (if any) <span style="color: gray; font-size: smaller;">(Optional)</span> *@
+@*                         </label> *@
+@*                         <input type="text" id="Disability" name="Disability" class="form-control form-input" value="@Model.Disability"> *@
+@*                         <small class="text-muted d-block small">Specify if you have any disability.</small> *@
+@*                         <small id="disabilityError" class="error-message text-danger small"></small> *@
+@*                     </div> *@
+@*                 </div> *@
+
+
+
+
+
+@*             </div> *@
+@*         </div> *@
+
+@*         <!-- Back and Next Buttons --> *@
+@*         <div class="text-end mt-4"> *@
+@*             <a href="@Url.Action("Start", "AdmissionPortal")" *@
+@*                class="btn btn-secondary px-4 py-2 me-3"> *@
+@*                 Back *@
+@*             </a> *@
+@*             <button type="submit" class="btn btn-primary px-4 py-2"> *@
+@*                 Next *@
+@*             </button> *@
+@*         </div> *@
+
+@*     </form> *@
+@* } *@
+@* else *@
+@* { *@
+@*     <p class="text-danger">Error: Enrollment data is unavailable.</p> *@
+@* } *@
+
+@* <script> *@
+@*         window.onload = function () { *@
+@*         let dateInput = document.getElementById("DateOfBirth"); *@
+
+@*         // If no value is set, default to 2012-01-01 *@
+@*         if (!dateInput.value) { *@
+@*             dateInput.value = "2012-01-01"; *@
+@*         } *@
+@*     }; *@
+
+@* </script> *@
+
+
+
+@*        </div> *@
+
+
+       
+
+
+
+
+
+
+
+
+@* </body> *@

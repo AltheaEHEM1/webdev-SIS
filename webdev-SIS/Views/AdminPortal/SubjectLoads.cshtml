@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "Admin_Layout";  // Specifies the layout to use
+    ViewData["Title"] = "Subject Loads";
+}
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; width: 100vw; margin: 0;">
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png"
+         alt="Decorative background representing Grade 7"
+         class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+
+
+    <!-- Main Content -->
+    <div style="background-color: rgba(220, 232, 253, 0.9); padding: 20px; border-radius: 10px;">
+        <section class="fixed ml-72 px-11 py-6 w-full top-20 left-0" style="font-weight: bold;">
+            <p class="text-sm text-black fs-5">
+                <i class="fas fa-user text-black fs-5"></i>
+                <a asp-controller="AdminPortal" asp-action="Faculty" class="text-black" style="text-decoration: none;">Faculty</a>
+            </p>
+        </section>
+
+        <h4>Faculty: Pola, Poppy Orlando</h4>
+        <div>
+            <label for="school-year" class="form-label me-2">School Year:</label>
+            <select id="school-year" class="form-select d-inline-block w-auto" aria-label="Filter by Year">
+                <option value="2020-2021">2020 - 2021</option>
+                <option value="2021-2022">2021 - 2022</option>
+                <option value="2022-2023">2022 - 2023</option>
+                <option value="2023-2024">2023 - 2024</option>
+                <option value="2024-2025" selected>2024 - 2025</option>
+            </select>
+        </div>
+
+
+        <!-- Card for each subject -->
+        <div class="card my-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p><strong>Subject:</strong> Araling Panlipunan (AP)</p>
+                        <p><strong>Grade Level:</strong> 7</p>
+                        <p><strong>Section:</strong> Mars</p>
+                        <p><strong>Assigned Date:</strong> Nov-27-2024</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Schedules</h6>
+                                <p>Wednesday: 02:00 PM - 03:00 PM</p>
+                                <p>Monday: 09:00 AM - 10:00 AM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+</body>

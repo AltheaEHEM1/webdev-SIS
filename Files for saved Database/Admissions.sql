@@ -1,0 +1,77 @@
+CREATE TABLE Admissions (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    GradeLevel NVARCHAR(10) NOT NULL CHECK (GradeLevel IN ('Grade 7', 'Grade 8', 'Grade 9', 'Grade 10')),
+    FirstName VARCHAR(50) NOT NULL,
+    MiddleName VARCHAR(50),
+    LastName VARCHAR(50) NOT NULL,
+    Suffix VARCHAR(10),
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    DateOfBirth DATE NOT NULL,
+    CivilStatus VARCHAR(10) NOT NULL,
+    Sex VARCHAR(10) NOT NULL CHECK (Sex IN ('Male', 'Female')),
+    Country VARCHAR(50) NOT NULL,
+    Region VARCHAR(50) NOT NULL,
+    City VARCHAR(50) NOT NULL,
+    Height DECIMAL(5,2) NOT NULL,
+    Weight DECIMAL(5,2) NOT NULL,
+    Religion VARCHAR(50),
+    Disability VARCHAR(100),
+    Phone_number VARCHAR(11) NOT NULL CHECK (Phone_number LIKE '09%' AND LEN(Phone_number) = 11),
+    Landline_number VARCHAR(8) NULL CHECK (Landline_number IS NULL OR (Landline_number LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')),
+    Emergency_landline_number VARCHAR(8) NULL CHECK (Emergency_landline_number IS NULL OR (Emergency_landline_number LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')),
+    ContactPerson VARCHAR(100) NOT NULL,
+    ContactNumber VARCHAR(15) NOT NULL,
+    Relationship VARCHAR(50) NOT NULL,
+    HouseNo VARCHAR(50) NOT NULL,
+    Barangay VARCHAR(50) NOT NULL,
+    Street VARCHAR(50) NOT NULL,
+    Municipality VARCHAR(50) NOT NULL,
+    Province VARCHAR(50) NOT NULL,
+    ZipCode VARCHAR(10) NOT NULL,
+    PermanentHouseNo VARCHAR(50) NOT NULL,
+    PermanentBarangay VARCHAR(50) NOT NULL,
+    PermanentStreet VARCHAR(50) NOT NULL,
+    PermanentMunicipality VARCHAR(50) NOT NULL,
+    PermanentProvince VARCHAR(50) NOT NULL,
+    PermanentZipCode VARCHAR(10) NOT NULL,
+    ParentFirstName VARCHAR(50) NOT NULL,
+    MaidenName VARCHAR(50) NOT NULL,
+    ParentLastName VARCHAR(50) NOT NULL,
+    ParentContactNo VARCHAR(15) NOT NULL,
+    ParentRelationship VARCHAR(50) NOT NULL,
+    GuardianFirstName VARCHAR(50) NULL,
+    GuardianMiddleName VARCHAR(50) NULL,
+    GuardianLastName VARCHAR(50)  NULL,
+    GuardianContactNo VARCHAR(15) NULL,
+    GuardianRelationship VARCHAR(50) NULL,
+    SchoolName VARCHAR(100) NOT NULL,
+    SchoolAddress VARCHAR(255) NOT NULL,
+    SchoolContact VARCHAR(15) NOT NULL,
+    SchoolLandline VARCHAR(8) NULL CHECK (SchoolLandline IS NULL OR (SchoolLandline LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')),
+    SchoolType VARCHAR(10) NOT NULL CHECK (SchoolType IN ('Public', 'Private', 'Other')),
+    YearOfGraduation INT NOT NULL CHECK (YearOfGraduation BETWEEN 2000 AND 9999),
+    LRN VARCHAR(12) UNIQUE NOT NULL,
+    GWA DECIMAL(4,2) NOT NULL CHECK (GWA BETWEEN 64.00 AND 100.00),
+    DateCreated DATETIME DEFAULT GETDATE(),
+    IsDeleted BIT NOT NULL DEFAULT 0,
+);
+
+ALTER TABLE Admissions ALTER COLUMN GuardianFirstName NVARCHAR(50) NULL;
+ALTER TABLE Admissions ALTER COLUMN GuardianMiddleName NVARCHAR(50) NULL;
+ALTER TABLE Admissions ALTER COLUMN GuardianLastName NVARCHAR(50) NULL;
+ALTER TABLE Admissions ALTER COLUMN GuardianContactNo NVARCHAR(50) NULL;
+ALTER TABLE Admissions ALTER COLUMN GuardianRelationship NVARCHAR(50) NULL;
+ALTER TABLE Admissions ALTER COLUMN GuardianRelationship NVARCHAR(50) NULL;
+ALTER TABLE Admissions ADD TermsAccepted BIT NOT NULL DEFAULT 0;
+
+EXEC sp_rename 'Admissions.MaidenName', 'ParentMiddleName', 'COLUMN';
+
+ALTER TABLE Admissions 
+ALTER COLUMN ParentMiddleName VARCHAR(50) NULL;
+
+
+USE PUPSIS
+
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Admissions' AND COLUMN_NAME = 'TermsAccepted';

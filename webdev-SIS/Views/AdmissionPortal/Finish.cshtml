@@ -1,0 +1,408 @@
+﻿@model AdmissionEntity
+@{
+    Layout = "AdmissionLayout";  // Specifies the layout to use
+    ViewData["Title"] = "Finish";
+}
+<!-- Progress Steps -->
+<div class="form-progress">
+    <div class="progress-step active" id="createAccountStep">
+        <div class="progress-circle active">1</div>
+        <small>Create Account</small>
+    </div>
+    <div class="progress-step active" id="instructionsStep">
+        <div class="progress-circle active">2</div>
+        <small>Instructions</small>
+    </div>
+    <div class="progress-step active" id="personalInfoStep">
+        <div class="progress-circle active">3</div>
+        <small>Personal Information</small>
+    </div>
+    <div class="progress-step active" id="contactStep">
+        <div class="progress-circle active">4</div>
+        <small>Contact</small>
+    </div>
+    <div class="progress-step active" id="familyStep">
+        <div class="progress-circle active">5</div>
+        <small>Family</small>
+    </div>
+    <div class="progress-step active" id="schoolStep">
+        <div class="progress-circle active">6</div>
+        <small>School</small>
+    </div>
+    <div class="progress-step active" id="finishStep">
+        <div class="progress-circle active">7</div>
+        <small>Finish</small>
+    </div>
+</div>
+
+<hr />
+
+<div class="container mt-5">
+    <!-- Step Title -->
+    <h4 class="fw-bold mb-4" style="color: #172154;">Finish Your Application</h4>
+    <p class="text-muted">Please review the information you provided. If everything is correct, click "Submit Application". If you need to make changes, use the "Back" button to go back to the specific step.</p>
+
+    <form asp-controller="AdmissionPortal" asp-action="Finish" method="post">
+        <!-- Personal Information Section -->
+        <div class="card mb-4">
+            <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                Incoming
+            </div>
+
+            <div class="card-body p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Grade Level -->
+                    <div>
+                        <div class="row">
+                            <div class="col-auto"><strong>Grade Level:</strong></div>
+                            <div class="col-md-auto">@Model.GradeLevel</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                Personal Information
+            </div>
+            <div class="card mb-4 p-3">
+                <div class="card-body">
+                    <!-- Applicant Details (Left Side) -->
+                    <div class="col-md-8">
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>First Name:</strong></div>
+                            <div class="col-md-8">@Model.FirstName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Middle Name:</strong></div>
+                            <div class="col-md-8">@Model.MiddleName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Last Name:</strong></div>
+                            <div class="col-md-8">@Model.LastName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Suffix:</strong></div>
+                            <div class="col-md-8">@Model.Suffix</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Email:</strong></div>
+                            <div class="col-md-8">@Model.Email</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Date of Birth:</strong></div>
+                            <div class="col-md-8">
+                                @Model.DateOfBirth.ToShortDateString()
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Civil Status:</strong></div>
+                            <div class="col-md-8">@Model.CivilStatus</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Sex:</strong></div>
+                            <div class="col-md-8">@Model.Sex</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Country:</strong></div>
+                            <div class="col-md-8">@Model.Country</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Region:</strong></div>
+                            <div class="col-md-8">@Model.Region</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>City / Municipality:</strong></div>
+                            <div class="col-md-8">@Model.City</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Height:</strong></div>
+                            <div class="col-md-8">@Model.Height</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Weight:</strong></div>
+                            <div class="col-md-8">@Model.Weight</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Religion:</strong></div>
+                            <div class="col-md-8">@Model.Religion</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Disability:</strong></div>
+                            <div class="col-md-8">@Model.Disability</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                Contact
+            </div>
+            <div class="card mb-4 p-3">
+                <div class="card-body">
+                    <div class="col-md-8">
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Landline:</strong></div>
+                            <div class="col-md-8">@Model.Landline_number </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Phone:</strong></div>
+                            <div class="col-md-8">@Model.Phone_number </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Emergency Landline:</strong></div>
+                            <div class="col-md-8">@Model.Emergency_landline_number</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Contact Person:</strong></div>
+                            <div class="col-md-8">@Model.ContactPerson</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Contact Number:</strong></div>
+                            <div class="col-md-8">@Model.ContactNumber</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Relationship:</strong></div>
+                            <div class="col-md-8">@Model.Relationship</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                Current Address
+            </div>
+            <div class="card mb-4 p-3">
+                <div class="card-body">
+                    <div class="col-md-8">
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>House / Building No.:</strong></div>
+                            <div class="col-md-8">@Model.HouseNo</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Barangay:</strong></div>
+                            <div class="col-md-8">@Model.Barangay</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Street:</strong></div>
+                            <div class="col-md-8">@Model.Street</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>City / Municipality:</strong></div>
+                            <div class="col-md-8">@Model.Municipality</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Province:</strong></div>
+                            <div class="col-md-8">@Model.Province</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Zip Code:</strong></div>
+                            <div class="col-md-8">@Model.ZipCode</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                Permanent Address
+            </div>
+            <div class="card mb-4 p-3">
+                <div class="card-body">
+                    <div class="col-md-8">
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>House / Building No.:</strong></div>
+                            <div class="col-md-8">@Model.PermanentHouseNo</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Barangay:</strong></div>
+                            <div class="col-md-8">@Model.PermanentBarangay</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Street:</strong></div>
+                            <div class="col-md-8">@Model.PermanentStreet</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>City / Municipality:</strong></div>
+                            <div class="col-md-8">@Model.PermanentMunicipality</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Province:</strong></div>
+                            <div class="col-md-8">@Model.PermanentProvince</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Zip Code:</strong></div>
+                            <div class="col-md-8">@Model.PermanentZipCode</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                Family
+            </div>
+            <div class="card mb-4 p-3">
+                <div class="card-body">
+                    <div class="col-md-8">
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Parent First Name:</strong></div>
+                            <div class="col-md-8">@Model.ParentFirstName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Middle Name:</strong></div>
+                            <div class="col-md-8">@Model.ParentMiddleName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Primary Parent Last Name:</strong></div>
+                            <div class="col-md-8">@Model.ParentLastName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Primary Parent Contact No:</strong></div>
+                            <div class="col-md-8">@Model.ParentContactNo</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Primary Parent Relationship:</strong></div>
+                            <div class="col-md-8">@Model.ParentRelationship</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Secondary Guardian First Name:</strong></div>
+                            <div class="col-md-8">@Model.GuardianFirstName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Secondary Guardian Middle Name:</strong></div>
+                            <div class="col-md-8">@Model.GuardianMiddleName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Secondary Guardian Last Name:</strong></div>
+                            <div class="col-md-8">@Model.GuardianLastName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Secondary Guardian Contact No:</strong></div>
+                            <div class="col-md-8">@Model.GuardianContactNo</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Secondary Guardian Relationship:</strong></div>
+                            <div class="col-md-8">@Model.GuardianRelationship</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                Previous School
+            </div>
+            <div class="card mb-4 p-3">
+                <div class="card-body">
+                    <div class="col-md-8">
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>School Name:</strong></div>
+                            <div class="col-md-8">@Model.SchoolName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>School Address:</strong></div>
+                            <div class="col-md-8">@Model.SchoolAddress</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>School Contact:</strong></div>
+                            <div class="col-md-8">@Model.SchoolContact</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>School Type:</strong></div>
+                            <div class="col-md-8">@Model.SchoolType</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>Year Of Graduation:</strong></div>
+                            <div class="col-md-8">@Model.YearOfGraduation</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>LRN:</strong></div>
+                            <div class="col-md-8">@Model.LRN</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4"><strong>GWA:</strong></div>
+                            <div class="col-md-8">@Model.GWA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                Please read and accept the following terms and conditions before proceeding with the admission process:
+            </div>
+            <div class="modal-body card mb-4 p-3">
+                <ul>
+                    <li>You must provide accurate and complete information.</li>
+                    <li>All information provided will be used for admission purposes only.</li>
+                    <li>False or misleading information may result in disqualification.</li>
+                    <li>By continuing, you agree to comply with the rules and regulations of the institution.</li>
+                </ul>
+
+                <div class="form-check">
+                    <input type="checkbox" asp-for="TermsAccepted" class="form-check-input" id="termsCheckbox">
+                    <label class="form-check-label" for="termsCheckbox">I agree to the Terms and Conditions</label>
+                </div>
+            </div>
+
+        </div>
+
+       
+
+        <!-- Back and Submit Buttons -->
+        <div class="text-end">
+            <a href="@Url.Action("School", "AdmissionPortal")" class="btn btn-secondary text-decoration-none">Back</a>
+
+            <button type="submit" class="btn btn-success">
+                Submit Application
+            </button>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    function updateTermsAccepted() {
+         let isChecked = document.getElementById("termsCheckbox").checked ? 1 : 0;
+
+         // Send data to the server
+         fetch('update_terms.php', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+             body: JSON.stringify({ termsAccepted: isChecked })
+         })
+         .then(response => response.json())
+         .then(data => console.log("Database updated:", data))
+         .catch(error => console.error("Error updating database:", error));
+     }
+</script>
+
+
+
+
+

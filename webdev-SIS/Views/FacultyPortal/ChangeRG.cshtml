@@ -1,0 +1,193 @@
+﻿@{
+    Layout = "Faculty_Layout";  // Specifies the layout to use
+    ViewData["Title"] = "Home Page";
+}
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; margin: 0;">
+
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png"
+         alt="Decorative background representing Grade 7"
+         class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <!-- Main Content -->
+    <div class="container-fluid p-5" style="background-color: rgba(220, 232, 253, 0.9); border-radius: 10px;">
+
+        <section class="fixed ml-72 px-11 py-6 w-full top-20 left-0" style="font-weight: bold;">
+            <div class="d-flex align-items-center justify-content-between">
+                <!-- Text and Link -->
+                <p class="text-sm text-black fs-5 mb-0">
+                    <i class="fas fa-user-check text-black"></i>
+                    <a asp-controller="FacultyPortal" asp-action="Index" class="text-black" style="text-decoration: none;">Change of grades</a>
+                </p>
+                <!-- Ellipsis Dropdown -->
+                <div class="dropdown">
+                    <button class="btn btn-link p-0 text-dark rounded-circle bg-light"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <li>
+                            <a class="dropdown-item @(ViewData["ActiveMenu"]?.ToString() == "EncodeGrades" ? "active fw-bold" : "")"
+                               asp-area="" asp-controller="FacultyPortal" asp-action="EncodeGrades">
+                                <i class="fas fa-clipboard-list"></i> Encode Grades
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item @(ViewData["ActiveMenu"]?.ToString() == "ChangeRG" ? "active fw-bold" : "")"
+                               asp-area="" asp-controller="FacultyPortal" asp-action="ChangeRG">
+                                <i class="fas fa-clipboard-list"></i> Change of Grades
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <!-- Request Grade Change Button (Left side) -->
+            <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#gradeChangeModal">
+                Request Grade Change
+            </button>
+
+            <!-- Request Status Dropdown (Right side) -->
+            <div class="col-12 col-md-4 mb-4">
+                <label for="requestStatus">Request Status:</label>
+                <select class="form-control" id="requestStatus">
+                    <option value="Approved">Approved</option>
+                    <option value="Declined">Declined</option>
+                    <option value="Pending">Pending</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-header">
+                    <tr>
+                        <th style="background-color: #162051; color: white; border-top-left-radius: 10px;">Faculty Name</th>
+                        <th style="background-color: #162051; color: white;">Section</th>
+                        <th style="background-color: #162051; color: white;">Subject</th>
+                        <th style="background-color: #162051; color: white;">Quarter</th>
+                        <th style="background-color: #162051; color: white;">Date</th>
+                        <th style="background-color: #162051; color: white;">Status</th>
+                        <th style="background-color: #162051; color: white; border-top-right-radius: 10px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nadine Borja</td>
+                        <td>Palladium</td>
+                        <td>Earth and Life Science</td>
+                        <td>1</td>
+                        <td>12/08/2024</td>
+                        <td>Pending</td>
+                        <td>
+                            <a style="cursor: pointer; color: #007bff; text-decoration: none;"
+                               onmouseover="this.style.color='#0056b3';"
+                               onmouseout="this.style.color='#007bff';"
+                               onclick="window.location.href='@Url.Action("RCgrades", "FacultyPortal", new { area = "", id = 1 })';">
+                                Review
+                            </a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="gradeChangeModal" tabindex="-1" aria-labelledby="gradeChangeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="gradeChangeModalLabel">Grade Change Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form asp-controller="FacultyPortal" asp-action="SubmitGradeChangeRequest" method="post">
+                        <div class="row">
+                            <!-- Faculty Information -->
+                            <div class="col-md-6">
+                                <label for="facultyName">Faculty Name: <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="facultyName" name="facultyName" required>
+                                <div class="invalid-feedback">Faculty Name is required.</div>
+                            </div>
+
+                            <!-- Student Information -->
+                            <div class="col-md-6">
+                                <label for="studentName">Student Name: <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="studentName" name="studentName" required>
+                                <div class="invalid-feedback">Student Name is required.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="studentNumber">LRN: <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="studentNumber" name="studentNumber" required
+                                       pattern="^\d{12}$" title="LRN must be exactly 12 digits">
+                                <div class="invalid-feedback">LRN must be exactly 12 digits.</div>
+                            </div>
+
+                            <!-- Grade Information -->
+                            <div class="col-md-6">
+                                <label for="subject">Subject: <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="subject" name="subject" required>
+                                <div class="invalid-feedback">Subject is required.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="currentGrade">Current Grade: <span style="color: red;">*</span></label>
+                                <input type="number" class="form-control" id="currentGrade" name="currentGrade" required
+                                       min="65" max="100" title="Grade must be between 65 and 100">
+                                <div class="invalid-feedback">Grade must be between 65 and 100.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="updatedGrade">Updated Grade: <span style="color: red;">*</span></label>
+                                <input type="number" class="form-control" id="updatedGrade" name="updatedGrade" required
+                                       min="65" max="100" title="Grade must be between 65 and 100">
+                                <div class="invalid-feedback">Grade must be between 65 and 100.</div>
+                            </div>
+
+                            <!-- Reason for Grade Change -->
+                            <div class="col-12">
+                                <label for="reason">Reason for Grade Change:</label>
+                                <textarea class="form-control" id="reason" name="reason" rows="3" required></textarea>
+                                <div class="invalid-feedback">Please provide a reason for the grade change.</div>
+                            </div>
+
+                            <!-- Supporting Documents -->
+                            <div class="col-12">
+                                <label for="supportingDocuments">Supporting Documents: <span style="color: red;">*</span></label>
+                                <input type="file" class="form-control" id="supportingDocuments" name="supportingDocuments" multiple>
+                                <div class="invalid-feedback">Supporting documents are required.</div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="col-12 mt-3">
+                                <label for="note">Additional Notes:</label>
+                                <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</body>

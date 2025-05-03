@@ -1,0 +1,335 @@
+﻿@model IEnumerable<webdev_SIS.Models.UserEntity>
+
+
+@{
+    Layout = "Faculty_Layout";
+    ViewData["Title"] = "Profile";
+}
+
+<!-- Background Image -->
+<img src="~/images/bgjr.png"
+     alt="Decorative background representing Grade 7"
+     class="img-fluid w-100"
+     style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+<!-- Main Content -->
+<div class="container-fluid p-3" style="background-color: rgba(220, 232, 253, 0.9); border-radius: 10px;">
+    <section class="fixed ml-72 px-11 py-6 w-full top-20 left-0" style="font-weight: bold;">
+        <p class="text-sm text-black fs-5">
+            <i class="fas fa-user text-black"></i>
+            <a asp-controller="Faculty_Layout" asp-action="Profile" class="text-black" style="text-decoration: none;">Profile</a>
+        </p>
+    </section>
+
+    <div class="bg-light rounded p-3 mb-3">
+        <!-- Profile Image and Info with Edit Button -->
+        @foreach (var profile in Model)
+        {
+            if (profile != null)
+            {
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <img src="~/images/profile-placeholder.png" alt="User Photo" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;" />
+                        <div class="ms-3">
+                            <div class="mb-2">
+                                <span class="text-dark">Name: </span>
+                                <span class="text-dark fw-semibold">@profile.FirstName @profile.LastName</span>
+                            </div>
+                            <div class="mb-2">
+                                <span class="text-dark">Role: </span>
+                                <span class="text-dark fw-semibold">@profile.Role</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#uploadProfileModal">Edit Photo</button>
+                </div>
+            }
+        }
+
+    </div>
+
+    <!-- Content Section -->
+    <div class="row g-4">
+        @foreach (var profile in Model)
+        {
+            <!-- Personal Information -->
+            <div class="col-12 col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <button class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#editPIModal">Edit</button>
+                    </div>
+                    <div class="card-body text-muted">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>First Name</span>
+                            <span class="text-dark fw-semibold">@profile.FirstName</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Last Name</span>
+                            <span class="text-dark fw-semibold">@profile.LastName</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Email</span>
+                            <span class="text-dark fw-semibold">@profile.Email</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+
+
+    <!-- Logout Button - Positioned to the Right -->
+    <div class="mt-2 text-end">
+        <!-- Logout Button -->
+        <div class="mt-2 text-end">
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                Log Out
+            </button>
+        </div>
+
+        <!-- Modal for Logout Confirmation -->
+        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">Are you sure you want to log out this account?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form asp-action="Logout" asp-controller="Account" method="post">
+                            <button type="submit" class="btn btn-danger">Log Out</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<!-- Modal for Uploading Profile Picture -->
+<div class="modal fade" id="uploadProfileModal" tabindex="-1" aria-labelledby="uploadProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadProfileModalLabel">Upload New Profile Picture</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="UpdateProfilePicture" asp-controller="Profile" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="profileImageUpload" class="form-label">Choose a new profile image</label>
+                        <input type="file" class="form-control" id="profileImageUpload" name="profileImage" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-dark">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Modal for Editing Personal Information -->
+<div class="modal fade" id="editPIModal" tabindex="-1" aria-labelledby="editPIModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPIModalLabel">Edit Personal Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="UpdatePersonalInfo" asp-controller="Profile" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" name="FirstName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" name="LastName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="Email" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*             @model ChangePasswordViewModel *@
+@* @{ *@
+@*     ViewData["Title"] = "Change Password"; *@
+@* } *@
+
+@* <h2>Change Password</h2> *@
+
+@* <form asp-action="ChangePassword" method="post"> *@
+@*     <div class="mb-3"> *@
+@*         <label>New Password</label> *@
+@*         <input type="password" name="NewPassword" class="form-control" required /> *@
+@*     </div> *@
+@*     <div class="mb-3"> *@
+@*         <label>Confirm Password</label> *@
+@*         <input type="password" name="ConfirmPassword" class="form-control" required /> *@
+@*     </div> *@
+@*     <button type="submit" class="btn btn-primary">Change Password</button> *@
+@* </form> *@
+
+
+
+
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Pre-fill Personal Information Modal
+        document.querySelectorAll("[data-bs-target='#editPIModal']").forEach(button => {
+            button.addEventListener("click", function () {
+                let profileId = this.dataset.id; // Assuming each button has data-id with profile ID
+                let profileName = this.dataset.name;
+                let profileLastName = this.dataset.lastname;
+                let profileEmail = this.dataset.email;
+                let profilePhone = this.dataset.phone;
+
+                document.getElementById("firstName").value = profileName;
+                document.getElementById("lastName").value = profileLastName;
+                document.getElementById("email").value = profileEmail;
+                document.getElementById("phoneNo").value = profilePhone;
+            });
+        });
+
+        // Handle Personal Info Form Submission via AJAX
+        document.getElementById("editPIModal").querySelector("form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            try {
+                const response = await fetch("/Profile/UpdatePersonalInfo", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to update profile.");
+                }
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast("Profile updated successfully!", "success");
+                    bootstrap.Modal.getInstance(document.getElementById("editPIModal")).hide();
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showToast(result.message, "danger");
+                }
+            } catch (error) {
+                console.error("Error updating profile:", error);
+                showToast("Error updating profile.", "danger");
+            }
+        });
+
+        // Pre-fill Address Modal
+        document.querySelectorAll("[data-bs-target='#editAddressModal']").forEach(button => {
+            button.addEventListener("click", function () {
+                document.getElementById("houseNo").value = this.dataset.houseno;
+                document.getElementById("streetName").value = this.dataset.street;
+                document.getElementById("barangay").value = this.dataset.barangay;
+                document.getElementById("city").value = this.dataset.city;
+                document.getElementById("province").value = this.dataset.province;
+                document.getElementById("zipCode").value = this.dataset.zip;
+            });
+        });
+
+        // Handle Address Form Submission via AJAX
+        document.getElementById("editAddressModal").querySelector("form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            try {
+                const response = await fetch("/Profile/UpdateAddress", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to update address.");
+                }
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast("Address updated successfully!", "success");
+                    bootstrap.Modal.getInstance(document.getElementById("editAddressModal")).hide();
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showToast(result.message, "danger");
+                }
+            } catch (error) {
+                console.error("Error updating address:", error);
+                showToast("Error updating address.", "danger");
+            }
+        });
+
+        // Profile Picture Upload
+        document.getElementById("uploadProfileModal").querySelector("form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            try {
+                const response = await fetch("/Profile/UpdateProfilePicture", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to upload profile picture.");
+                }
+
+                const result = await response.json();
+                if (result.success) {
+                    showToast("Profile picture updated successfully!", "success");
+                    bootstrap.Modal.getInstance(document.getElementById("uploadProfileModal")).hide();
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showToast(result.message, "danger");
+                }
+            } catch (error) {
+                console.error("Error uploading profile picture:", error);
+                showToast("Error uploading profile picture.", "danger");
+            }
+        });
+
+        // Toast function
+        function showToast(message, type) {
+            const toastContainer = document.createElement("div");
+            toastContainer.className = `alert alert-${type} fixed-top m-3`;
+            toastContainer.style.zIndex = "1050";
+            toastContainer.innerHTML = message;
+
+            document.body.appendChild(toastContainer);
+            setTimeout(() => toastContainer.remove(), 3000);
+        }
+    });
+</script>
+

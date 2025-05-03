@@ -1,0 +1,166 @@
+﻿@model IEnumerable<AnnouncementEntity>
+
+@{
+    Layout = "Faculty_Layout";  // Specifies the layout to use
+    ViewData["Title"] = "Home Page";
+}
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; margin: 0;">
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png"
+         alt="Decorative background representing Grade 7"
+         class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 mt-3 p-4 rounded" style="max-width: 1500px; margin: 0 auto; background-color: #172154;">
+        <!-- Left Section: Text -->
+        <div class="welcome-text text-center text-md-start" style="width: 100%; max-width: 1000px; color: white; border-radius: 10px;">
+            <div class="row align-items-center">
+                <!-- Left Section: Text -->
+                <div class="col-md-8">
+                    <h2 class="text-3xl font-bold mt-1" style="font-family: 'Potta One', sans-serif;">
+                        Welcome to Laurelcrest High School
+                    </h2>
+                    <p class="mt-3 text-sm md:text-base">
+                        Access the Faculty Portal to efficiently manage student information, monitor academic progress, schedule classes, and contribute to smooth daily operations at Laurelcrest High School.
+                    </p>
+                </div>
+                <!-- Right Section: Image -->
+                <div class="col-md-4 text-end">
+                    <img src="~/images/welcome.png" alt="Books illustration" class="img-fluid" style="max-width: 150px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Main Content with Consistent Padding -->
+    <div style="background-color: rgba(220, 232, 253, 0.9); padding: 40px 20px; border-radius: 15px; max-width: 1500px; margin: 0 auto;">
+        <div class="welcome-text text-center text-md-start rounded p-3" style="background-color: #f9f9f9; max-width: 1400px; margin: 0 auto; padding: 20px;">
+            <h4 class="text-3xl font-bold mt-1" style="color: #333;">Hello, [Name]!</h4>
+            <p class="mt-3 text-sm md:text-base">
+                We're so glad to see you! Explore the Jose Rizal High School student information system to easily manage student information and support the school.
+            </p>
+        </div>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 mt-3 p-4 bg-white rounded" style="max-width: 1400px; margin: 0 auto;">
+            <h5 class="mb-0" style="color: #333;">Class Overview Summary</h5>
+            <div class="col-12 col-md-4 mt-2 mt-md-0">
+                <select class="form-select fs-6" id="dropdownSchoolYear" aria-label="Select School Year" style="padding: 10px;">
+                    <option value="" disabled selected>Select School Year</option>
+                    <option value="2020-2021">2020 - 2021</option>
+                    <option value="2021-2022">2021 - 2022</option>
+                    <option value="2022-2023">2022 - 2023</option>
+                    <option value="2023-2024">2023 - 2024</option>
+                    <option value="2024-2025">2024 - 2025</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="row g-3 d-flex align-items-stretch" style="min-height: 400px;">
+            <div class="col-md-6">
+                <div class="bg-white p-3 rounded shadow d-flex flex-column h-100">
+                    <div>
+                        <p class="mb-1"><strong>Grade Level:</strong> 7</p>
+                        <p class="mb-1"><strong>Section:</strong> Palladium</p>
+                        <p class="mb-1"><strong>Total Enrolled Students:</strong> 40</p>
+                    </div>
+
+                    <div class="mt-3 d-flex justify-content-center align-items-center" style="min-height: 250px;">
+                        <canvas id="studentsChart" class="chart" style="max-width: 100%; height: 100%;"></canvas>
+                    </div>
+
+                    <a class="btn fw-bold mt-3 @(string.Equals(ViewData["ActiveMenu"]?.ToString(), "ClassAdvisory", StringComparison.OrdinalIgnoreCase) ? "text-white" : "btn-outline-primary")"
+                       style="@(string.Equals(ViewData["ActiveMenu"]?.ToString(), "ClassAdvisory", StringComparison.OrdinalIgnoreCase) ? "background-color: #4E73DF;" : "")"
+                       asp-area="" asp-controller="FacultyPortal" asp-action="ViewClassAd">
+                        View Class Advisory
+                    </a>
+
+                </div>
+
+
+            </div>
+           
+
+
+
+
+            <div class="col-md-6">
+                <div class="p-3 rounded shadow-sm h-100 d-flex flex-column" style="background-color: #172154; max-height: 500px; overflow-y: auto; position: relative;">
+                    <h4 class="text-white mb-0 p-3" style="position: sticky; top: 0; background-color: #172154; z-index: 10; width: 100%;">Announcements</h4>
+                    <div id="announcements-container" class="mt-2 px-2" style="overflow-y: auto; max-height: 450px; padding-top: 10px;">
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var announcement in Model)
+                            {
+                                <div class="bg-white p-3 rounded shadow mb-3 transition-effect">
+                                    <h5 class="fw-bold fs-5">@announcement.Header</h5>
+                                    <p class="fs-6 mb-0">@announcement.Details</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-center text-muted">No announcements available.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+
+    <script>
+        // Data for the bar chart
+        const studentsData = {
+            labels: ['Male', 'Female'], // X-axis labels
+            datasets: [
+                {
+                    label: 'Number of Students',
+                    data: [150, 140], // Total number of students (Male, Female)
+                    backgroundColor: ['rgba(54, 162, 235, 0.7)', 'rgba(255, 99, 132, 0.7)'], // Blue and Red
+                    borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        // Create the bar chart
+        const studentsCtx = document.getElementById('studentsChart').getContext('2d');
+        new Chart(studentsCtx, {
+            type: 'bar',
+            data: studentsData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false // No legend needed for a single dataset
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Gender'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Students'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>

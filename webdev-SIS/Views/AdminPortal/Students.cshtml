@@ -1,0 +1,247 @@
+﻿@* @model IEnumerable<StudentEntity> *@
+
+@{
+    Layout = "Admin_Layout"; 
+    ViewData["Title"] = "Student"; 
+}
+
+<style>
+    body {
+        background-color: #f8f9fa; /* Light background */
+    }
+
+    .grade-card {
+        border: 2px solid #dee2e6; /* Light gray border */
+        padding: 15px;
+        background-color: white; /* White card background */
+        text-align: center;
+    }
+
+    /* Grade title background colors */
+    .grade-title.grade-7 {
+        background-color: #28a745;
+    }
+    /* Green */
+    .grade-title.grade-8 {
+        background-color: #ffc107;
+    }
+    /* Yellow */
+    .grade-title.grade-9 {
+        background-color: #dc3545;
+    }
+    /* Red */
+    .grade-title.grade-10 {
+        background-color: #007bff;
+    }
+    /* Blue */
+
+    .grade-title {
+        padding: 10px;
+        color: white; /* White text for title */
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .section-list {
+        list-style-type: none; /* Remove bullet points */
+        padding: 0;
+    }
+
+    /* Section item hover effect */
+    .section-item {
+        padding: 8px 0;
+        border-top: 1px solid #dee2e6; /* Light gray line between section items */
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .section-item:hover {
+            background-color: rgba(100, 149, 237, 0.1); /* Light blue background on hover */
+            color: #0056b3; /* Blue text on hover */
+            font-weight: bold;
+        }
+
+</style>
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; width: 100vw; margin: 0;">
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png" alt="Decorative background representing Grade 7" class="img-fluid w-100" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <!-- Main Content -->
+    <div style="background-color: rgba(220, 232, 253, 0.9); padding: 20px; border-radius: 10px;">
+        <section class="d-flex justify-content-between align-items-center flex-wrap mb-3" style="font-weight: bold;">
+            <p class="text-sm text-black fs-5">
+                <i class="fas fa-user-graduate text-black"></i>
+                <a asp-controller="AdminPortal" asp-action="Student" class="text-black" style="text-decoration: none;">Student's sections'</a>
+            </p>
+
+            <a asp-controller="AdminPortal" asp-action="Unenroll" class="btn btn-danger">
+                Unenroll Students
+            </a>
+
+        </section>
+
+        <div class="container mt-4">
+            <div class="row justify-content-center g-4">
+                <!-- Grade 7 -->
+                <div class="col-md-3">
+                    <div class="grade-title grade-7">Grade 7</div>
+                    <div class="grade-card">
+                        <ul class="section-list">
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Acacia" style="text-decoration: none; color: inherit;">Acacia</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Molave" style="text-decoration: none; color: inherit;">Molave</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Ipil" style="text-decoration: none; color: inherit;">Ipil</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Kamagong" style="text-decoration: none; color: inherit;">Kamagong</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Yakal" style="text-decoration: none; color: inherit;">Yakal</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Narra" style="text-decoration: none; color: inherit;">Narra</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Mahogany" style="text-decoration: none; color: inherit;">Mahogany</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Bamboo" style="text-decoration: none; color: inherit;">Bamboo</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Lauan" style="text-decoration: none; color: inherit;">Lauan</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Jacaranda" style="text-decoration: none; color: inherit;">Jacaranda</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Grade 8 -->
+                <div class="col-md-3">
+                    <div class="grade-title grade-8">Grade 8</div>
+                    <div class="grade-card">
+                        <ul class="section-list">
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Perseverance" style="text-decoration: none; color: inherit;">Perseverance</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Integrity" style="text-decoration: none; color: inherit;">Integrity</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Patience" style="text-decoration: none; color: inherit;">Patience</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Courage" style="text-decoration: none; color: inherit;">Courage</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Loyalty" style="text-decoration: none; color: inherit;">Loyalty</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Compassion" style="text-decoration: none; color: inherit;">Compassion</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Humility" style="text-decoration: none; color: inherit;">Humility</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Resilience" style="text-decoration: none; color: inherit;">Resilience</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Sincerity" style="text-decoration: none; color: inherit;">Sincerity</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Fortitude" style="text-decoration: none; color: inherit;">Fortitude</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Grade 9 -->
+                <div class="col-md-3">
+                    <div class="grade-title grade-9">Grade 9</div>
+                    <div class="grade-card">
+                        <ul class="section-list">
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Einstein" style="text-decoration: none; color: inherit;">Einstein</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Curie" style="text-decoration: none; color: inherit;">Curie</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Pascal" style="text-decoration: none; color: inherit;">Pascal</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Faraday" style="text-decoration: none; color: inherit;">Faraday</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Darwin" style="text-decoration: none; color: inherit;">Darwin</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Bohr" style="text-decoration: none; color: inherit;">Bohr</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Edison" style="text-decoration: none; color: inherit;">Edison</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Hawking" style="text-decoration: none; color: inherit;">Hawking</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Tesla" style="text-decoration: none; color: inherit;">Tesla</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Galileo" style="text-decoration: none; color: inherit;">Galileo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Grade 10 -->
+                <div class="col-md-3">
+                    <div class="grade-title grade-10">Grade 10</div>
+                    <div class="grade-card">
+                        <ul class="section-list">
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Rizal" style="text-decoration: none; color: inherit;">Rizal</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Bonifacio" style="text-decoration: none; color: inherit;">Bonifacio</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Del Pilar" style="text-decoration: none; color: inherit;">Del Pilar</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Mabini" style="text-decoration: none; color: inherit;">Mabini</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Jacinto" style="text-decoration: none; color: inherit;">Jacinto</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Luna" style="text-decoration: none; color: inherit;">Luna</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Aguinaldo" style="text-decoration: none; color: inherit;">Aguinaldo</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Silang" style="text-decoration: none; color: inherit;">Silang</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Gomez" style="text-decoration: none; color: inherit;">Gomez</a>
+                            </li>
+                            <li class="section-item">
+                                <a asp-controller="AdminPortal" asp-action="StudentList" asp-route-section="Burgos" style="text-decoration: none; color: inherit;">Burgos</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+

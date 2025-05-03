@@ -1,0 +1,230 @@
+﻿@{
+    Layout = "Admin_Layout";  // Specifies the layout to use
+    ViewData["Title"] = "Claseses";
+}
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; width: 100vw; margin: 0;">
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png"
+         alt="Decorative background representing Grade 7"
+         class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <!-- Main Content -->
+    <div class="container" style="background-color: rgba(220, 232, 253, 0.9); padding: 20px; border-radius: 10px;">
+        <section class="d-flex justify-content-between align-items-center flex-wrap mb-3" style="font-weight: bold;">
+            <p class="text-sm text-black fs-5">
+                <i class="fas fa-user text-black"></i>
+                <a asp-controller="AdminPortal" asp-action="Classes" class="text-black text-decoration-none">Class Management</a>
+            </p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClassModal">
+                + Class
+            </button>
+        </section>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="background-color: #162051; color: white; border-top-left-radius: 10px;">Subject</th>
+                        <th style="background-color: #162051; color: white;">Schedule</th>
+                        <th style="background-color: #162051; color: white;">Faculty</th>
+                        <th style="background-color: #162051; color: white;">Grade Level</th>
+                        <th style="background-color: #162051; color: white; border-top-right-radius: 10px;">School Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- This will be populated dynamically by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- + class -->
+    <div class="modal fade" id="createClassModal" tabindex="-1" aria-labelledby="createClassModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <!-- Reduced width -->
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="createClassModalLabel">Create Class</h5>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Section and Subject Inline -->
+                    <div class="mb-3">
+                        <label for="dropdownSection" class="form-label fs-6">Select Section</label>
+                        <select class="form-select fs-6 w-100" id="dropdownSection" aria-label="Select Section">
+                            <option value="palladium">Palladium</option>
+                            <option value="ruby">Ruby</option>
+                            <option value="emerald">Emerald</option>
+                            <option value="sapphire">Sapphire</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dropdownSubject" class="form-label fs-6">Select Subject</label>
+                        <select class="form-select fs-6 w-100" id="dropdownSubject" aria-label="Choose Subject">
+                            <option value="english">English</option>
+                            <option value="math">Math</option>
+                            <option value="science">Science</option>
+                            <option value="history">History</option>
+                        </select>
+                    </div>
+
+                    <!-- Year Level -->
+                    <div class="mb-3">
+                        <label for="dropdownYearLevel" class="form-label fs-6">School Year</label>
+                        <select class="form-select fs-6 w-100" id="dropdownYearLevel" aria-label="Select School Year">
+                            <option value="1">2020-2021</option>
+                            <option value="2">2021-2022</option>
+                            <option value="3">2022-2023</option>
+                            <option value="4">2023-2024</option>
+                            <option value="5">2024-2025</option>
+                        </select>
+                    </div>
+
+                    <!-- Faculty and Incoming Grade -->
+                    <div class="mb-3">
+                        <label for="faculty" class="form-label fs-6">Faculty</label>
+                        <select class="form-select" id="faculty">
+                            <option>Choose...</option>
+                            <!-- Add faculty options here -->
+                        </select>
+                    </div>
+                    <!-- In the create class modal -->
+                    <div class="mb-3">
+                        <label for="createGradeLevel" class="form-label fs-6">Select Incoming Grade</label>
+                        <select class="form-select fs-6 w-100" id="createGradeLevel" aria-label="Select Incoming Grade">
+                            <option value="7">Grade 7</option>
+                            <option value="8">Grade 8</option>
+                            <option value="9">Grade 9</option>
+                            <option value="10">Grade 10</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success">Save Class</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Load faculty options when creating a new class
+            await loadFacultyOptions();
+
+            // Handle class creation
+            const saveClassBtn = document.querySelector('#createClassModal .btn-success');
+            saveClassBtn.addEventListener('click', createClass);
+
+            await loadClassData();
+
+            // Add filter event listeners
+            document.getElementById('dropdownIncomingGradeLevel').addEventListener('change', loadClassData);
+            document.getElementById('dropdownSchoolYear').addEventListener('change', loadClassData);
+        });
+
+        async function loadFacultyOptions() {
+            try {
+                const response = await fetch('/api/Faculty');
+                const faculty = await response.json();
+
+                const facultySelect = document.getElementById('faculty');
+                facultySelect.innerHTML = '<option value="">Choose...</option>';
+
+                faculty.forEach(f => {
+                    const option = document.createElement('option');
+                    option.value = f.id;
+                    option.textContent = f.facultyName;
+                    facultySelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading faculty:', error);
+            }
+        }
+
+        async function createClass() {
+            try {
+                const section = document.getElementById('dropdownSection').value;
+                const subject = document.getElementById('dropdownSubject').value;
+                const facultySelect = document.getElementById('faculty');
+                const facultyName = facultySelect.options[facultySelect.selectedIndex].text;
+                const gradeLevel = document.getElementById('createGradeLevel').value; // Updated ID
+                const yearLevelSelect = document.getElementById('dropdownYearLevel');
+
+                // Map the year level value to actual school year
+                const schoolYearMap = {
+                    "1": "2020-2021",
+                    "2": "2021-2022",
+                    "3": "2022-2023",
+                    "4": "2023-2024",
+                    "5": "2024-2025"
+                };
+
+                const schoolYear = schoolYearMap[yearLevelSelect.value];
+
+                const classData = {
+                    section,
+                    subject,
+                    facultyName,
+                    gradeLevel,
+                    schoolYear
+                };
+
+                const response = await fetch('/api/Classes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(classData)
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    loadClassData();
+                    alert('Class created successfully!');
+                    $('#createClassModal').modal('hide');
+                } else {
+                    alert('Error creating class.');
+                }
+            } catch (error) {
+                console.error('Error saving class:', error);
+            }
+        }
+
+        async function loadClassData() {
+            try {
+                const gradeLevel = document.getElementById('dropdownIncomingGradeLevel').value;
+                const schoolYear = document.getElementById('dropdownSchoolYear').value;
+
+                const response = await fetch(`/api/Classes?gradeLevel=${gradeLevel}&schoolYear=${schoolYear}`);
+                const classes = await response.json();
+
+                const tableBody = document.querySelector('table tbody');
+                tableBody.innerHTML = '';
+
+                classes.forEach(c => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${c.subject}</td>
+                        <td>${c.schedule}</td>
+                        <td>${c.facultyName}</td>
+                        <td>${c.gradeLevel}</td>
+                        <td>${c.schoolYear}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading class data:', error);
+            }
+        }
+
+        function resetFilters() {
+            document.getElementById('dropdownIncomingGradeLevel').value = '';
+            document.getElementById('dropdownSchoolYear').value = '';
+            loadClassData();
+        }
+    </script>
+</body>

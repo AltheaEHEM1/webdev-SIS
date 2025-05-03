@@ -1,0 +1,1464 @@
+﻿@model IEnumerable<StudentEntity>
+
+
+@{
+    Layout = "Admin_Layout";  // Specifies the layout to use
+    ViewData["Title"] = "Student Detail";
+}
+
+
+<style>
+    .container {
+        background-color: #dce8fd;
+        padding: 20px;
+        border-radius: 10px;
+    }
+</style>
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; width: 100vw; margin: 0;">
+    <img src="~/images/bgjr.png" alt="Decorative background" class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <div style="background-color: rgba(220, 232, 253, 0.9); padding: 20px; border-radius: 10px;">
+        <section class="d-flex justify-content-between align-items-center flex-wrap" style="font-weight: bold;">
+            <p class="text-sm text-black fs-5">
+                <i class="fas fa-user text-black"></i>
+                <a asp-controller="AdminPortal" asp-action="Student" class="text-black" style="text-decoration: none;">Student Information</a>
+            </p>
+
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#unenrollModal">
+                <i class="fas fa-user-minus ms-1"></i> Unenroll
+            </button>
+        </section>
+        
+        
+
+        <div class="container">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var studentsection in Model)
+                {
+                    <div class="container">
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header text-white fw-bold" style="background-color: #172154;">
+                                        Incoming
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Grade Level:</strong></div>
+                                            <div class="col-8">@studentsection.GradeLevel</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Section:</strong></div>
+                                            <div class="col-8">@studentsection.SectionName</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                @* Personal Information *@
+                                <div class="card mb-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3" style="background-color: #172154;">
+                                        <div class="card-header text-white fw-bold mb-0" style="padding-right: 15px;">
+                                            Personal Information
+                                        </div>
+                                        <!-- Edit Link -->
+                                        <a data-bs-toggle="modal" data-bs-target="#editPersonalInformationModal" style="color: #f1c40f; text-decoration: none; padding: 8px 16px;">
+                                            Edit
+                                        </a>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Full Name:</strong></div>
+                                            <div class="col-8">@($"{studentsection.FirstName} {studentsection.MiddleName} {studentsection.LastName} {studentsection.Suffix}")</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Email:</strong></div>
+                                            <div class="col-8">@studentsection.Email</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Date of Birth:</strong></div>
+                                            <div class="col-8">@studentsection.DateOfBirth.ToShortDateString()</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4"><strong>Civil Status:</strong></div>
+                                            <div class="col-md-8">@studentsection.CivilStatus</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Sex::</strong></div>
+                                            <div class="col-md-8">@studentsection.Sex</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Country:</strong></div>
+                                            <div class="col-md-8">@studentsection.Country</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Region:</strong></div>
+                                            <div class="col-md-8">@studentsection.Region</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>City / Municipality:</strong></div>
+                                            <div class="col-md-8">@studentsection.City</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Height:</strong>Height:</div>
+                                            <div class="col-md-8">@studentsection.Height</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Weight:</strong></div>
+                                            <div class="col-md-8">@studentsection.Weight</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Religion:</strong></div>
+                                            <div class="col-md-8">@studentsection.Religion</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Disability:</strong></div>
+                                            <div class="col-md-8">@studentsection.Disability</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* Contact *@
+                                <div class="card">
+                                    <div class="d-flex justify-content-between align-items-center mb-3" style="background-color: #172154;">
+                                        <div class="card-header text-white fw-bold mb-0" style="padding-right: 15px;">
+                                            Contact
+                                        </div>
+                                        <!-- Edit Link -->
+                                        <a data-bs-toggle="modal" data-bs-target="#editContactModal" style="color: #f1c40f; text-decoration: none; padding: 8px 16px;">
+                                            Edit
+                                        </a>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Landline:</strong></div>
+                                            <div class="col-md-8">@studentsection.Landline_number</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Phone:</strong></div>
+                                            <div class="col-8">@studentsection.Phone_number</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4 fw-bold">Emergency Contact:</div>
+                                            <div class="col-md-8">@studentsection.ContactPerson - @studentsection.ContactNumber (@studentsection.Relationship)</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4 fw-bold"> <strong>Emergency Landline:</strong></div>
+                                            <div class="col-md-8">@studentsection.Emergency_landline_number</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* Address *@
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3" style="background-color: #172154;">
+                                        <div class="card-header text-white fw-bold mb-0" style="padding-right: 15px;">
+                                            Address
+                                        </div>
+                                        <!-- Edit Link -->
+                                        <a data-bs-toggle="modal" data-bs-target="#editAddressModal" style="color: #f1c40f; text-decoration: none; padding: 8px 16px;">
+                                            Edit
+                                        </a>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Current:</strong></div>
+                                            <div class="col-8">@($"{studentsection.HouseNo}, {studentsection.Street}, {studentsection.Barangay}, {studentsection.Municipality}, {studentsection.Province}, {studentsection.ZipCode}")</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Permanent:</strong></div>
+                                            <div class="col-8">@($"{studentsection.PermanentHouseNo}, {studentsection.PermanentStreet}, {studentsection.PermanentBarangay}, {studentsection.PermanentMunicipality}, {studentsection.PermanentProvince}, {studentsection.PermanentZipCode}")</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* Family *@
+                                <div class="card mb-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3" style="background-color: #172154;">
+                                        <div class="card-header text-white fw-bold mb-0" style="padding-right: 15px;">
+                                            Family
+                                        </div>
+                                        <!-- Edit Link -->
+                                        <a data-bs-toggle="modal" data-bs-target="#editFamilyModal" style="color: #f1c40f; text-decoration: none; padding: 8px 16px;">
+                                            Edit
+                                        </a>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4"><strong>Parent:</strong></div>
+                                            <div class="col-8">@($"{studentsection.ParentFirstName} {studentsection.ParentMiddleName} {studentsection.ParentLastName} - {studentsection.ParentContactNo} ({studentsection.ParentRelationship})")</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4"><strong>Guardian:</strong></div>
+                                            <div class="col-8">@($"{studentsection.GuardianFirstName} {studentsection.GuardianMiddleName} {studentsection.GuardianLastName} {studentsection.GuardianContactNo} ({studentsection.GuardianRelationship})")</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="d-flex justify-content-between align-items-center mb-3" style="background-color: #172154;">
+                                        <div class="card-header text-white fw-bold mb-0" style="padding-right: 15px;">
+                                            School
+                                        </div>
+                                        <!-- Edit Link -->
+                                        <a data-bs-toggle="modal" data-bs-target="#editSchoolModal" style="color: #f1c40f; text-decoration: none; padding: 8px 16px;">
+                                            Edit
+                                        </a>
+                                    </div>
+
+                                    <div class="card-body p-3">
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">School Name:</div><div class="col-md-8">@studentsection.SchoolName</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">School Address:</div><div class="col-md-8">@studentsection.SchoolAddress</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">School Contact:</div><div class="col-md-8">@studentsection.SchoolContact</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">School Type:</div><div class="col-md-8">@studentsection.SchoolType</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">Year Of Graduation:</div><div class="col-md-8">@studentsection.YearOfGraduation</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">LRN:</div><div class="col-md-8">@studentsection.LRN</div></div>
+                                        <div class="row mb-2"><div class="col-md-4 fw-bold">GWA:</div><div class="col-md-8">@studentsection.GWA</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Unenroll Confirmation Modal -->
+                    <div class="modal fade" id="unenrollModal" tabindex="-1" aria-labelledby="unenrollModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-danger text-white">
+                                    <h5 class="modal-title" id="unenrollModalLabel">Confirm Unenrollment</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <form id="unenrollForm" method="post" asp-controller="AdminPortal" asp-action="Unenroll">
+                                    @Html.AntiForgeryToken()
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to unenroll this student?</p>
+
+                                        <div class="mb-3">
+                                            <label for="reasonDescription" class="form-label">Reason for Unenrollment</label>
+                                            <textarea class="form-control" id="reasonDescription" name="ReasonDescription" rows="3" maxlength="300" required
+                                                      placeholder="Please provide a brief reason (2-3 sentences)..."></textarea>
+                                        </div>
+
+                                        <!-- Hidden field for student Id -->
+                                        <input type="hidden" name="id" id="unenrollStudentId" />
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                                        <button class="btn btn-outline-danger btn-sm" onclick="openUnenrollModal(@studentsection.Id)">
+                                            <i class="fas fa-user-minus"></i> Unenroll
+                                        </button>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                }
+            }
+            else
+            {
+                <p class="text-center text-muted">No admissions found.</p>
+            }
+        </div>
+    </div>
+
+
+
+
+
+
+    
+
+
+
+    <!-- Edit Personal Information Modal -->
+    <div class="modal fade" id="editPersonalInformationModal" tabindex="-1" aria-labelledby="editPersonalInformationLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="editPersonalInformationLabel">Edit Personal Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-4">
+                    <form id="studentpersonalinfoForm">
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="Id" value="@(Model?.FirstOrDefault()?.Id ?? 0)" />
+
+                       <div class="row mb-4">
+                            <!-- First Name -->
+                            <div class="col-md-3">
+                                <label for="FirstName" class="form-label fw-bold">
+                                    First Name
+                                </label>
+                                <input type="text" id="FirstName" name="FirstName" class="form-control"
+                                       pattern="^[A-Za-z]+(?: [A-Za-z]+)*$"
+                                       title="Only letters allowed. Spaces allowed for compound first names.">
+                                <small class="text-danger" id="firstNameError"></small>
+                            </div>
+
+                            <!-- Middle Name -->
+                            <div class="col-md-3">
+                                <label for="MiddleName" class="form-label fw-bold">
+                                    Middle Name
+                                </label>
+                                <input type="text" id="MiddleName" name="MiddleName" class="form-control"
+                                       pattern="^[A-Za-z]+$"
+                                       title="Only letters allowed.">
+                                <small class="text-danger" id="middleNameError"></small>
+                            </div>
+
+                            <!-- last Name -->
+                            <div class="col-md-3"> 
+                                <label for="LastName" class="form-label fw-bold">
+                                    Last Name
+                                </label>
+                                <input type="text" id="LastName" name="LastName" class="form-control"
+                                       pattern="^[A-Za-z]+(?: [A-Za-z]+)*$"
+                                       title="Only letters allowed. Spaces allowed for compound last names.">
+                                <small class="text-danger" id="lastNameError"></small>
+                            </div>
+
+                            <!-- Suffix -->
+                            <div class="col-md-3">
+                                <label for="Suffix" class="form-label fw-bold">
+                                    Suffix
+                                </label>
+                                <input type="text" id="Suffix" name="Suffix" class="form-control"
+                                       pattern="^[A-Za-z/-]+$"
+                                       title="Only letters, hyphens (-), and slashes (/) allowed.">
+                                <small class="text-danger" id="SuffixError"></small>
+                            </div>
+
+                       </div>
+
+                       <div class="row mb-4">
+                            <!-- Email Address -->
+                            <div class="col-md-3">
+                                <label for="Email" class="form-label fw-bold">E-mail Address</label>
+                                <input type="email" id="Email" name="Email" class="form-control form-input" title="Please enter a valid email address.">
+                                <small id="emailError" class="error-message"></small>
+                            </div>
+
+                            <!-- Date of Birth -->
+                            <div class="col-md-3">
+                                <label for="DateOfBirth" class="form-label fw-bold">Date of Birth</label>
+                                <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control form-input"
+                                       min="2012-01-01">
+                                <small id="dobError" class="error-message"></small>
+                            </div>
+
+                            <!-- Civil Status -->
+                            <div class="col-md-3">
+                                <label for="CivilStatus" class="form-label fw-bold">Civil Status</label>
+                                <input type="text" id="CivilStatus" name="CivilStatus" class="form-control">
+                                <small id="civilStatusError" class="error-message"></small>
+                            </div>
+
+                            <!-- Sex -->
+                            <div class="col-md-3">
+                                <label for="sex" class="form-label fw-bold">Sex</label>
+                                <select id="sex" name="Sex" class="form-select">
+                                    <option value="">Select Sex</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                       </div>
+
+                        <div class="row mb-4">                        
+                            <!-- Country -->
+                            <div class="col-md-4 mt-2">
+                                <label for="Country" class="form-label fw-bold">Country</label>
+                                <input type="text" id="Country" name="Country" class="form-control">
+                                <small id="countryError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+
+                            <!-- Region -->
+                            <div class="col-md-4">
+                                <label for="Region" class="form-label fw-bold">Region</label>
+                                <input type="text" id="Region" name="Region" class="form-control">
+                                <small id="regionError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+
+                            <!-- City / Municipality -->
+                            <div class="col-md-4">
+                                <label for="City" class="form-label fw-bold">City / Municipality</label>
+                                <input type="text" id="City" name="City" class="form-control">
+                                <small id="cityError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+                        </div>
+
+                       <div class="row mb-4">
+                            <!-- Height -->
+                            <div class="col-md-3">
+                                <label for="Height" class="form-label fw-bold">Height (cm)</label>
+                                <input type="text" id="Height" name="Height" class="form-control form-input"
+                                       title="Enter height in cm"
+                                       oninput="restrictDecimalInput(this); validateHeight();">
+                                <small id="heightError" class="error-message text-danger small"></small>
+                            </div>
+
+                            <!-- Weight -->
+                            <div class="col-md-3">
+                                <label for="Weight" class="form-label fw-bold">Weight (kg)</label>
+                                <input type="text" id="Weight" name="Weight" class="form-control form-input"
+                                       title="Enter weight in kg"
+                                       oninput="restrictDecimalInput(this); validateWeight();">
+                                <small id="weightError" class="error-message text-danger small"></small>
+                            </div>
+
+                            <!-- Religion -->
+                            <div class="col-md-3">
+                                <label for="Religion" class="form-label fw-bold">Religion</label>
+                                <input type="text" id="Religion" name="Religion" class="form-control form-input">
+                                <small id="religionError" class="error-message text-danger small"></small>
+                            </div>
+
+                            <!-- Disability -->
+                            <div class="col-md-3">
+                                <label for="Disability" class="form-label fw-bold">
+                                    Disability (if any)
+                                </label>
+                                <input type="text" id="Disability" name="Disability" class="form-control form-input">
+                                <small id="disabilityError" class="error-message text-danger small"></small>
+                            </div>
+                       </div>
+
+ 
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="savePersonalInfo()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Edit Contact Modal -->
+    <div class="modal fade" id="editContactModal" tabindex="-1" aria-labelledby="editContactModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="editContactModalLabel">Edit Contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="studentcontactform">
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="Id" value="@Model.FirstOrDefault()?.Id" />
+
+                        <div class="row mb-4">
+                            <!-- Landline Number -->
+                            <div class="col-md-6">
+                                <label for="LandlineNumber" class="form-label fw-bold">Landline Number</label>
+                                <input type="tel" id="LandlineNumber" name="Landline_number"
+                                       class="form-control form-input"
+                                       inputmode="numeric" pattern="\d{8}" maxlength="8"
+                                       title="Landline number must be exactly 8 digits."
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                       onchange="validateLandline('LandlineNumber', 'landlineError')">
+                                <small id="landlineError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div class="col-md-6">
+                                <label for="Phone_number" class="form-label fw-bold">Phone Number</label>
+                                <input type="tel" id="Phone_number" name="Phone_number"
+                                       class="form-control form-input"
+                                       inputmode="numeric" pattern="\d{11}" maxlength="11"
+                                       title="Phone number must be exactly 11 digits."
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <small id="phoneError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 align-items-end">
+                            <!-- Emergency Landline Number -->
+                            <div class="form-group">
+                                <label for="EmergencyLandlineNumber" class="form-label fw-bold">
+                                    Emergency Landline Number
+                                </label>
+                                <input type="tel"
+                                       id="EmergencyLandlineNumber"
+                                       name="Emergency_landline_number"
+                                       class="form-control form-input"
+                                       inputmode="numeric"
+                                       pattern="\d{8}" maxlength="8"
+                                       title="Landline number must be exactly 8 digits."
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                       onchange="validateLandline('EmergencyLandlineNumber', 'emergencyLandlineError')">
+                                <small id="emergencyLandlineError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+
+                            <!-- Checkbox to Copy Landline -->
+                            <div class="col-md-12 d-flex align-items-center mt-4">
+                                <input type="checkbox" id="CopyLandline" class="form-check-input me-2" onchange="copyLandline()">
+                                <label for="CopyLandline" class="form-check-label">Same as Emergency Landline</label>
+                            </div>
+                        </div>
+
+                       <div class="row mb-4">
+                            <!-- Contact Person -->
+                            <div class="col-md-4">
+                                <label for="ContactPerson" class="form-label fw-bold">Contact Person</label>
+                                <input type="text" id="ContactPerson" name="ContactPerson" class="form-control form-input">
+                                <small id="ContactPersonError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+
+                            <!-- Contact Number -->
+                            <div class="col-md-4">
+                                <label for="ContactNumber" class="form-label fw-bold">Contact Number</label>
+                                <input type="tel"
+                                       id="ContactNumber"
+                                       name="ContactNumber"
+                                       class="form-control form-input"
+                                       inputmode="numeric"
+                                       pattern="\d{11}"
+                                       maxlength="11"
+                                       title="Only numbers allowed. Must be 11 digits."
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <small id="ContactNumberError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+
+                            <!-- Relationship -->
+                            <div class="col-md-3">
+                                <label for="Relationship" class="form-label fw-bold">Relationship</label>
+                                <input type="text" id="Relationship" name="Relationship" class="form-control form-input">
+                                <small id="RelationshipError" class="error-message" style="font-size: 0.75em;"></small>
+                            </div>
+                       </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="saveContact()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <!-- Edit Address Modal -->
+    <div class="modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="editAddressModalLabel">Edit Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="studentaddressForm">
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="Id" value="@Model.FirstOrDefault()?.Id" />
+
+                        <!-- Current Address Section -->
+                        <h5 class="fw-bold mb-3">Current Address</h5>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="HouseNo" class="form-label fw-bold">House/Building No.</label>
+                                <input type="text"
+                                       id="HouseNo"
+                                       name="HouseNo"
+                                       class="form-control"
+                                       inputmode="numeric"
+                                       pattern="^\d+$"
+                                       title="Only numbers allowed."
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <small id="HouseNoError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="Barangay" class="form-label fw-bold">Barangay</label>
+                                <input type="text" id="Barangay" name="Barangay" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="Street" class="form-label fw-bold">Street</label>
+                                <input type="text" id="Street" name="Street" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="Municipality" class="form-label fw-bold">City/Municipality </label>
+                                <input type="text" id="Municipality" name="Municipality" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="Province" class="form-label fw-bold">Province </label>
+                                <input type="text" id="Province" name="Province" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="ZipCode" class="form-label fw-bold">ZIP Code</label>
+                                <input type="text"
+                                       id="ZipCode"
+                                       name="ZipCode"
+                                       class="form-control"
+                                       inputmode="numeric"
+                                       pattern="^\d{4}$"
+                                       maxlength="4"
+                                       title="Enter a 4-digit ZIP code"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <small id="ZipCodeError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+                        </div>
+
+                        <!-- Checkbox to Copy Address -->
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="sameAddress" onchange="copyAddress()">
+                            <label class="form-check-label" for="sameAddress">Same as Current Address</label>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Permanent Address Section -->
+                        <h5 class="fw-bold mb-3">Permanent Address</h5>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="PermanentHouseNo" class="form-label fw-bold">House/Building No.</label>
+                                <input type="text"
+                                       id="PermanentHouseNo"
+                                       name="PermanentHouseNo"
+                                       class="form-control"
+                                       inputmode="numeric"
+                                       pattern="^\d+$"
+                                       title="Only numbers allowed."
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <small id="PermanentHouseNoError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="PermanentBarangay" class="form-label fw-bold">Barangay </label>
+                                <input type="text" id="PermanentBarangay" name="PermanentBarangay" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="PermanentStreet" class="form-label fw-bold">Street </label>
+                                <input type="text" id="PermanentStreet" name="PermanentStreet" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="PermanentMunicipality" class="form-label fw-bold">City/Municipality </label>
+                                <input type="text" id="PermanentMunicipality" name="PermanentMunicipality" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="PermanentProvince" class="form-label fw-bold">Province </label>
+                                <input type="text" id="PermanentProvince" name="PermanentProvince" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="PermanentZipCode" class="form-label fw-bold">ZIP Code</label>
+                                <input type="text"
+                                       id="PermanentZipCode"
+                                       name="PermanentZipCode"
+                                       class="form-control"
+                                       inputmode="numeric"
+                                       pattern="^\d{4}$"
+                                       maxlength="4"
+                                       title="Enter a 4-digit ZIP code"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <small id="PermanentZipCodeError" class="error-message" style="font-size: 0.85em;"></small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="saveAddress()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Edit Family Modal -->
+    <div class="modal fade" id="editFamilyModal" tabindex="-1" aria-labelledby="editFamilyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="editFamilyModalLabel">Edit Family</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="studentfamilyform">
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="Id" value="@Model.FirstOrDefault()?.Id" />
+
+                        <h5 class="fw-bold mb-3">Parent Information</h5>
+
+                        <div class="row mb-3">
+                            <!-- Parent First Name -->
+                            <div class="col-md-4">
+                                <label for="ParentFirstName" class="form-label">Parent First Name </label>
+                                <input type="text" id="ParentFirstName" name="ParentFirstName"
+                                       class="form-control form-input">
+                            </div>
+
+                            <!-- Maiden Name -->
+                            <div class="col-md-4">
+                                <label for="ParentMiddleName" class="form-label">Middle Name</label>
+                                <input type="text" id="ParentMiddleName" name="ParentMiddleName"
+                                       class="form-control form-input">
+                            </div>
+
+                            <!-- Parent Last Name -->
+                            <div class="col-md-4">
+                                <label for="ParentLastName" class="form-label">Parent Last Name</label>
+                                <input type="text" id="ParentLastName" name="ParentLastName"
+                                       class="form-control form-input">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <!-- Parent Contact No -->
+                            <div class="col-md-6">
+                                <label for="ParentContactNo" class="form-label">Primary Parent Contact No</label>
+                                <input type="tel" id="ParentContactNo" name="ParentContactNo"
+                                       class="form-control form-input"
+                                       oninput="limitTo11Digits(this);"
+                                       pattern="^\d{11}$"
+                                       title="Contact number must be exactly 11 digits.">
+                            </div>
+
+                            <!-- Parent Relationship -->
+                            <div class="col-md-6">
+                                <label for="ParentRelationship" class="form-label">Primary Parent Relationship</label>
+                                <input type="text" id="ParentRelationship" name="ParentRelationship"
+                                       class="form-control form-input">
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h5 class="fw-bold mb-3">Guardian Information</h5>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="GuardianFirstName" class="form-label">First Name</label>
+                                <input type="text" id="GuardianFirstName" name="GuardianFirstName"
+                                       class="form-control form-input">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="GuardianMiddleName" class="form-label">Middle Name </label>
+                                <input type="text" id="GuardianMiddleName" name="GuardianMiddleName"
+                                       class="form-control form-input">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="GuardianLastName" class="form-label">Last Name</label>
+                                <input type="text" id="GuardianLastName" name="GuardianLastName"
+                                       class="form-control form-input">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <!-- Guardian Contact No -->
+                            <div class="col-md-6">
+                                <label for="GuardianContactNo" class="form-label">Contact Number</label>
+                                <input type="tel" id="GuardianContactNo" name="GuardianContactNo"
+                                       class="form-control form-input"
+                                       oninput="limitTo11Digits(this);"
+                                       pattern="^\d{11}$"
+                                       title="Contact number must be exactly 11 digits.">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="GuardianRelationship" class="form-label">Relationship </label>
+                                <input type="text" id="GuardianRelationship" name="GuardianRelationship"
+                                       class="form-control form-input">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="saveFamily()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit School Modal -->
+    <div class="modal fade" id="editSchoolModal" tabindex="-1" aria-labelledby="editSchoolModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="editSchoolModalLabel">Edit School</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="studentschoolform">
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="Id" value="@Model.FirstOrDefault()?.Id" />
+
+                        <!-- Previous School Information -->
+                        <div class="row mb-3 align-items-end">
+                            <div class="col-md-6">
+                                <label for="SchoolName" class="form-label">Name of Previous School</label>
+                                <input type="text" id="SchoolName" name="SchoolName" class="form-control form-input">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="SchoolAddress" class="form-label">School Address </label>
+                                <input type="text" id="SchoolAddress" name="SchoolAddress" class="form-control form-input">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="SchoolContact" class="form-label">School Contact Number</label>
+                                <input type="tel" id="SchoolContact" name="SchoolContact" class="form-control form-input"
+                                       pattern="^09\d{9}$" title="School contact number must start with 09 and be exactly 11 digits."
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="11">
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <label for="SchoolType" class="form-label">School Type </label>
+                                <select id="SchoolType" name="SchoolType" class="form-control form-input">
+                                    <option value="">Select School Type</option>
+                                    <option value="Public">Public</option>
+                                    <option value="Private">Private</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="YearOfGraduation" class="form-label">Year of Graduation</label>
+                                <input type="text" id="YearOfGraduation" name="YearOfGraduation" class="form-control form-input"
+                                       pattern="^20\d{2}$" title="Please enter a valid year (4 digits) starting with 20."
+                                       placeholder="2000"
+                                       maxlength="4"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <label for="LRN" class="form-label">Learner Reference No. (LRN)</label>
+                                <input type="text" id="LRN" name="LRN" class="form-control form-input"
+                                       pattern="^\d{12}$" maxlength="12"
+                                       title="LRN must be exactly 12 digits and only integers."
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <small id="lrnError" class="error-message"></small>
+                            </div>
+
+
+                            <!-- General Weighted Average (GWA) -->
+                            <div class="col-md-4">
+                                <label for="GWA" class="form-label">General Weighted Average</label>
+                                <input type="text" id="GWA" name="GWA" class="form-control form-input"
+                                       pattern="^(64\.00|(?:6[5-9]|[7-9][0-9])\.00|100\.00)$"
+                                       title="GWA must be a float between 64.00 and 100.00 with exactly 2 decimal places."
+                                       oninput="validateGWAInput(this); validateGWA();">
+                                <small id="gwaError" class="error-message text-danger"></small>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="saveSchool()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+              function openUnenrollModal(studentId) {
+            document.getElementById('unenrollStudentId').value = studentId;
+            var unenrollModal = new bootstrap.Modal(document.getElementById('unenrollModal'));
+            unenrollModal.show();
+        }
+
+
+          //restrcitions
+            function restrictDecimalInput(el, maxDigitsBeforeDecimal = 3, maxDecimalPlaces = 2) {
+                el.value = el.value
+                    .replace(/[^0-9.]/g, '')                       // Only digits and dot
+                    .replace(/(\..*)\./g, '$1')                    // Only one dot
+                    .replace(new RegExp(`^(\\d{${maxDigitsBeforeDecimal}})\\d`), '$1'); // Max digits before decimal
+
+                const parts = el.value.split(".");
+                if (parts[1]?.length > maxDecimalPlaces) {
+                    el.value = parts[0] + "." + parts[1].slice(0, maxDecimalPlaces);
+                }
+            }
+
+
+            function limitTo11Digits(el) {
+                el.value = el.value.replace(/\D/g, '').slice(0, 11); // Only digits, max 11
+            }
+
+
+            function validateGWAInput(el) {
+                el.value = el.value
+                    .replace(/[^0-9.]/g, '')           // Remove non-digits
+                    .replace(/(\..*)\./g, '$1');       // Only one dot
+
+                const parts = el.value.split(".");
+                if (parts[1]?.length > 2) {
+                    el.value = parts[0] + "." + parts[1].slice(0, 2);
+                }
+
+                const val = parseFloat(el.value);
+                if (val > 100) el.value = "100.00";
+            }
+
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Initialize modals with proper data
+                initializeModals();
+
+                // Add event listeners to the edit buttons
+                document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const modalId = this.getAttribute('data-bs-target').substring(1);
+                        prepareModalData(modalId);
+                    });
+                });
+            });
+
+
+            // Initialize modals with Bootstrap
+            function initializeModals() {
+                // Make sure Bootstrap modals are properly initialized
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    new bootstrap.Modal(modal);
+                });
+            }
+
+            // Prepare modal data before showing
+            function prepareModalData(modalId) {
+                const studentId = '@Model.FirstOrDefault()?.Id'; // Get student ID from the model
+
+                switch(modalId) {
+                    case 'editPersonalInformationModal':
+                        populatePersonalInfoForm(studentId);
+                        break;
+                    case 'editContactModal':
+                        populateContactForm(studentId);
+                        break;
+                    case 'editAddressModal':
+                        populateAddressForm(studentId);
+                        break;
+                    case 'editFamilyModal':
+                        populateFamilyForm(studentId);
+                        break;
+                    case 'editSchoolModal':
+                        populateSchoolForm(studentId);
+                        break;
+                }
+            }
+
+            // Populate Personal Information form
+            function populatePersonalInfoForm(studentId) {
+                const student = getStudentData();
+
+                // Set form values
+                document.getElementById('FirstName').value = student.FirstName || '';
+                document.getElementById('MiddleName').value = student.MiddleName || '';
+                document.getElementById('LastName').value = student.LastName || '';
+                document.getElementById('Suffix').value = student.Suffix || '';
+                document.getElementById('Email').value = student.Email || '';
+
+                // Format date properly for the date input (YYYY-MM-DD)
+                if (student.DateOfBirth) {
+                    const dob = new Date(student.DateOfBirth);
+                    const formattedDate = dob.toISOString().split('T')[0];
+                    document.getElementById('DateOfBirth').value = formattedDate;
+                }
+
+                document.getElementById('CivilStatus').value = student.CivilStatus || '';
+
+                // Set select dropdown value
+                const sexSelect = document.getElementById('sex');
+                if (sexSelect) {
+                    for (let i = 0; i < sexSelect.options.length; i++) {
+                        if (sexSelect.options[i].value === student.Sex) {
+                            sexSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                document.getElementById('Country').value = student.Country || '';
+                document.getElementById('Region').value = student.Region || '';
+                document.getElementById('City').value = student.City || '';
+                document.getElementById('Height').value = student.Height || '';
+                document.getElementById('Weight').value = student.Weight || '';
+                document.getElementById('Religion').value = student.Religion || '';
+                document.getElementById('Disability').value = student.Disability || '';
+            }
+
+            // Populate Contact form
+            function populateContactForm(studentId) {
+                const student = getStudentData();
+
+                document.getElementById('LandlineNumber').value = student.Landline_number || '';
+                document.getElementById('Phone_number').value = student.Phone_number || '';
+                document.getElementById('EmergencyLandlineNumber').value = student.Emergency_landline_number || '';
+                document.getElementById('ContactPerson').value = student.ContactPerson || '';
+                document.getElementById('ContactNumber').value = student.ContactNumber || '';
+                document.getElementById('Relationship').value = student.Relationship || '';
+            }
+
+            // Populate Address form
+            function populateAddressForm(studentId) {
+                const student = getStudentData();
+
+                document.getElementById('HouseNo').value = student.HouseNo || '';
+                document.getElementById('Barangay').value = student.Barangay || '';
+                document.getElementById('Street').value = student.Street || '';
+                document.getElementById('Municipality').value = student.Municipality || '';
+                document.getElementById('Province').value = student.Province || '';
+                document.getElementById('ZipCode').value = student.ZipCode || '';
+
+                document.getElementById('PermanentHouseNo').value = student.PermanentHouseNo || '';
+                document.getElementById('PermanentBarangay').value = student.PermanentBarangay || '';
+                document.getElementById('PermanentStreet').value = student.PermanentStreet || '';
+                document.getElementById('PermanentMunicipality').value = student.PermanentMunicipality || '';
+                document.getElementById('PermanentProvince').value = student.PermanentProvince || '';
+                document.getElementById('PermanentZipCode').value = student.PermanentZipCode || '';
+
+                // Reset the checkbox
+                document.getElementById('sameAddress').checked = false;
+            }
+
+            // Populate Family form
+            function populateFamilyForm(studentId) {
+                const student = getStudentData();
+
+                document.getElementById('ParentFirstName').value = student.ParentFirstName || '';
+                document.getElementById('ParentMiddleName').value = student.ParentMiddleName || '';
+                document.getElementById('ParentLastName').value = student.ParentLastName || '';
+                document.getElementById('ParentContactNo').value = student.ParentContactNo || '';
+                document.getElementById('ParentRelationship').value = student.ParentRelationship || '';
+
+                document.getElementById('GuardianFirstName').value = student.GuardianFirstName || '';
+                document.getElementById('GuardianMiddleName').value = student.GuardianMiddleName || '';
+                document.getElementById('GuardianLastName').value = student.GuardianLastName || '';
+                document.getElementById('GuardianContactNo').value = student.GuardianContactNo || '';
+                document.getElementById('GuardianRelationship').value = student.GuardianRelationship || '';
+            }
+
+            // Populate School form
+            function populateSchoolForm(studentId) {
+                const student = getStudentData();
+
+                document.getElementById('SchoolName').value = student.SchoolName || '';
+                document.getElementById('SchoolAddress').value = student.SchoolAddress || '';
+                document.getElementById('SchoolContact').value = student.SchoolContact || '';
+
+                // Set select dropdown value for school type
+                const schoolTypeSelect = document.getElementById('SchoolType');
+                if (schoolTypeSelect) {
+                    for (let i = 0; i < schoolTypeSelect.options.length; i++) {
+                        if (schoolTypeSelect.options[i].value === student.SchoolType) {
+                            schoolTypeSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                document.getElementById('YearOfGraduation').value = student.YearOfGraduation || '';
+                document.getElementById('LRN').value = student.LRN || '';
+                document.getElementById('GWA').value = student.GWA || '';
+            }
+
+        // Helper function to get student data from the current page
+        function getStudentData() {
+            // Since we're already on the student details page, we can extract the data
+            // from the displayed information instead of making an AJAX call
+            return {
+                Id: '@Model.FirstOrDefault()?.Id',
+                FirstName: '@Model.FirstOrDefault()?.FirstName',
+                MiddleName: '@Model.FirstOrDefault()?.MiddleName',
+                LastName: '@Model.FirstOrDefault()?.LastName',
+                Suffix: '@Model.FirstOrDefault()?.Suffix',
+                Email: '@Model.FirstOrDefault()?.Email',
+                DateOfBirth: '@Model.FirstOrDefault()?.DateOfBirth.ToString("yyyy-MM-dd")',
+                CivilStatus: '@Model.FirstOrDefault()?.CivilStatus',
+                Sex: '@Model.FirstOrDefault()?.Sex',
+                Country: '@Model.FirstOrDefault()?.Country',
+                Region: '@Model.FirstOrDefault()?.Region',
+                City: '@Model.FirstOrDefault()?.City',
+                Height: '@Model.FirstOrDefault()?.Height',
+                Weight: '@Model.FirstOrDefault()?.Weight',
+                Religion: '@Model.FirstOrDefault()?.Religion',
+                Disability: '@Model.FirstOrDefault()?.Disability',
+
+                Landline_number: '@Model.FirstOrDefault()?.Landline_number',
+                Phone_number: '@Model.FirstOrDefault()?.Phone_number',
+                Emergency_landline_number: '@Model.FirstOrDefault()?.Emergency_landline_number',
+                ContactPerson: '@Model.FirstOrDefault()?.ContactPerson',
+                ContactNumber: '@Model.FirstOrDefault()?.ContactNumber',
+                Relationship: '@Model.FirstOrDefault()?.Relationship',
+
+                HouseNo: '@Model.FirstOrDefault()?.HouseNo',
+                Barangay: '@Model.FirstOrDefault()?.Barangay',
+                Street: '@Model.FirstOrDefault()?.Street',
+                Municipality: '@Model.FirstOrDefault()?.Municipality',
+                Province: '@Model.FirstOrDefault()?.Province',
+                ZipCode: '@Model.FirstOrDefault()?.ZipCode',
+                PermanentHouseNo: '@Model.FirstOrDefault()?.PermanentHouseNo',
+                PermanentBarangay: '@Model.FirstOrDefault()?.PermanentBarangay',
+                PermanentStreet: '@Model.FirstOrDefault()?.PermanentStreet',
+                PermanentMunicipality: '@Model.FirstOrDefault()?.PermanentMunicipality',
+                PermanentProvince: '@Model.FirstOrDefault()?.PermanentProvince',
+                PermanentZipCode: '@Model.FirstOrDefault()?.PermanentZipCode',
+
+                ParentFirstName: '@Model.FirstOrDefault()?.ParentFirstName',
+                ParentMiddleName: '@Model.FirstOrDefault()?.ParentMiddleName',
+                ParentLastName: '@Model.FirstOrDefault()?.ParentLastName',
+                ParentContactNo: '@Model.FirstOrDefault()?.ParentContactNo',
+                ParentRelationship: '@Model.FirstOrDefault()?.ParentRelationship',
+                GuardianFirstName: '@Model.FirstOrDefault()?.GuardianFirstName',
+                GuardianMiddleName: '@Model.FirstOrDefault()?.GuardianMiddleName',
+                GuardianLastName: '@Model.FirstOrDefault()?.GuardianLastName',
+                GuardianContactNo: '@Model.FirstOrDefault()?.GuardianContactNo',
+                GuardianRelationship: '@Model.FirstOrDefault()?.GuardianRelationship',
+
+                SchoolName: '@Model.FirstOrDefault()?.SchoolName',
+                SchoolAddress: '@Model.FirstOrDefault()?.SchoolAddress',
+                SchoolContact: '@Model.FirstOrDefault()?.SchoolContact',
+                SchoolLandline: '@Model.FirstOrDefault()?.SchoolLandline',
+                SchoolType: '@Model.FirstOrDefault()?.SchoolType',
+                YearOfGraduation: '@Model.FirstOrDefault()?.YearOfGraduation',
+                LRN: '@Model.FirstOrDefault()?.LRN',
+                GWA: '@Model.FirstOrDefault()?.GWA'
+            };
+        }
+
+        // Function to copy address from current to permanent
+        function copyAddress() {
+            if (document.getElementById('sameAddress').checked) {
+                document.getElementById('PermanentHouseNo').value = document.getElementById('HouseNo').value;
+                document.getElementById('PermanentBarangay').value = document.getElementById('Barangay').value;
+                document.getElementById('PermanentStreet').value = document.getElementById('Street').value;
+                document.getElementById('PermanentMunicipality').value = document.getElementById('Municipality').value;
+                document.getElementById('PermanentProvince').value = document.getElementById('Province').value;
+                document.getElementById('PermanentZipCode').value = document.getElementById('ZipCode').value;
+            } else {
+                // Don't clear the fields when unchecked, just leave them as is
+            }
+        }
+
+        // Function to copy landline
+        function copyLandline() {
+            if (document.getElementById('CopyLandline').checked) {
+                document.getElementById('EmergencyLandlineNumber').value = document.getElementById('LandlineNumber').value;
+            } else {
+                // Don't clear the field when unchecked, just leave it as is
+            }
+        }
+
+        // Function to show notifications
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} notification`;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '9999';
+            notification.style.padding = '15px';
+            notification.style.borderRadius = '5px';
+            notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+            notification.style.maxWidth = '300px';
+            notification.textContent = message;
+
+            // Add to document
+            document.body.appendChild(notification);
+
+            // Remove after 3 seconds
+            setTimeout(function() {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.5s ease';
+                setTimeout(function() {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+
+        // Save Personal Information
+        function savePersonalInfo() {
+            // Get the form element
+            const form = document.getElementById('studentpersonalinfoForm');
+
+            // Check form validity
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Create FormData object
+            const formData = new FormData(form);
+
+            // Send AJAX request
+            $.ajax({
+                url: '/AdminPortal/UpdatePersonalInfo',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Close the modal
+                        const modalElement = document.getElementById('editPersonalInformationModal');
+                        const modal = bootstrap.Modal.getInstance(modalElement);
+                        modal.hide();
+
+                        // Show success message
+                        showNotification(response.message, 'success');
+
+                        // Reload the page to show updated data
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        // Show error message
+                        showNotification(response.message, 'error');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showNotification('An error occurred while saving the data: ' + error, 'error');
+                }
+            });
+        }
+
+        // Save Contact Information
+        function saveContact() {
+            // Get the form element
+            const form = document.getElementById('studentcontactform');
+
+            // Check form validity
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Create FormData object
+            const formData = new FormData(form);
+
+            // Send AJAX request
+            $.ajax({
+                url: '/AdminPortal/UpdateContact',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Close the modal
+                        const modalElement = document.getElementById('editContactModal');
+                        const modal = bootstrap.Modal.getInstance(modalElement);
+                        modal.hide();
+
+                        // Show success message
+                        showNotification(response.message, 'success');
+
+                        // Reload the page to show updated data
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        // Show error message
+                        showNotification(response.message, 'error');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showNotification('An error occurred while saving the data: ' + error, 'error');
+                }
+            });
+        }
+
+        // Save Address Information
+        function saveAddress() {
+            // Get the form element
+            const form = document.getElementById('studentaddressForm');
+
+            // Check form validity
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Create FormData object
+            const formData = new FormData(form);
+
+            // Send AJAX request
+            $.ajax({
+                url: '/AdminPortal/UpdateAddress',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Close the modal
+                        const modalElement = document.getElementById('editAddressModal');
+                        const modal = bootstrap.Modal.getInstance(modalElement);
+                        modal.hide();
+
+                        // Show success message
+                        showNotification(response.message, 'success');
+
+                        // Reload the page to show updated data
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        // Show error message
+                        showNotification(response.message, 'error');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showNotification('An error occurred while saving the data: ' + error, 'error');
+                }
+            });
+        }
+
+        // Save Family Information
+        function saveFamily() {
+            // Get the form element
+            const form = document.getElementById('studentfamilyform');
+
+            // Check form validity
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Create FormData object
+            const formData = new FormData(form);
+
+            // Send AJAX request
+            $.ajax({
+                url: '/AdminPortal/UpdateFamily',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Close the modal
+                        const modalElement = document.getElementById('editFamilyModal');
+                        const modal = bootstrap.Modal.getInstance(modalElement);
+                        modal.hide();
+
+                        // Show success message
+                        showNotification(response.message, 'success');
+
+                        // Reload the page to show updated data
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        // Show error message
+                        showNotification(response.message, 'error');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showNotification('An error occurred while saving the data: ' + error, 'error');
+                }
+            });
+        }
+
+        // Save School Information
+        function saveSchool() {
+            // Get the form element
+            const form = document.getElementById('studentschoolform');
+
+            // Check form validity
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Create FormData object
+            const formData = new FormData(form);
+
+            // Send AJAX request
+            $.ajax({
+                url: '/AdminPortal/UpdateSchool',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Close the modal
+                        const modalElement = document.getElementById('editSchoolModal');
+                        const modal = bootstrap.Modal.getInstance(modalElement);
+                        modal.hide();
+
+                        // Show success message
+                        showNotification(response.message, 'success');
+
+                        // Reload the page to show updated data
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        // Show error message
+                        showNotification(response.message, 'error');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showNotification('An error occurred while saving the data: ' + error, 'error');
+                }
+            });
+        }
+      
+    </script>
+
+</body>

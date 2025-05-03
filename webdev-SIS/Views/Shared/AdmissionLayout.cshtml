@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @* @model EnrollmentEntity *@
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Register"] Register Portal</title>
+    <link rel="icon" href="~/images/logo.png" sizes="48x48">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/system_SIS.styles.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background-color: #EAF3FF;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+
+
+
+
+
+        .form-progress {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            flex: 1;
+        }
+
+        .progress-circle {
+            width: 35px;
+            height: 35px;
+            background-color: #6c757d; /* Gray for inactive steps */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Active Step */
+        .progress-step.active .progress-circle {
+            background-color: #007bff; /* Blue for active step */
+            transform: scale(1.1);
+        }
+
+        /* Completed Step */
+        .progress-step.completed .progress-circle {
+            background-color: #0056b3; /* Dark Blue for completed step */
+        }
+
+        /* Progress Line */
+        .progress-step::before,
+        .progress-step::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background-color: #6c757d; /* Gray for inactive */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .progress-step:first-child::before {
+            display: block; /* Ensure first step has a line */
+            left: 0;
+            width: 50%; /* Half of the width so it starts from the first circle */
+        }
+
+        .progress-step::after {
+            left: 50%;
+        }
+
+        /* Active Progress Line */
+        .progress-step.active::before,
+        .progress-step.completed::before,
+        .progress-step.active::after,
+        .progress-step.completed::after {
+            background-color: #007bff; /* Blue for active progress */
+        }
+
+        .progress-step:first-child::before {
+            display: none; /* Remove the excess line at the start */
+        }
+
+        .progress-step:last-child::after {
+            display: none !important; /* Ensure the last step does not have an extra line */
+        }
+
+
+       
+    </style>
+</head>
+<body>
+    <header class="bg-white shadow-sm py-2 px-3 mb-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <!-- Left Section: Logo and School Name -->
+            <div class="d-flex align-items-center">
+                <img src="~/images/logo.png" alt="Logo" class="logo me-3" />
+                <h5 class="mb-0 fw-bold">Laurelcrest High School</h5>
+            </div>
+
+            <!-- Right Section: Applicant Information and Sign Out -->
+            <div class="d-flex align-items-center">
+                <div class="text-end me-3">
+                    <a asp-controller="AdmissionPortal" asp-action="Profile" class="text-decoration-none">
+                        <img src="~/images/profile-placeholder.png" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;" />
+                    </a>
+                    <div>
+                        <p class="mb-0 fw-semibold text-primary">[NAME]</p>
+                        <p class="mb-0 small text-info">Admission Admin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <h4 class="fw-bold">Application Form</h4>
+            <div class="d-flex p-4 justify-content-center mb-5 mt-3 border rounded shadow-sm" style="background-color: #ffffff;">
+                <div class="col-lg-12 col-md-10">
+                    <!-- Increased width to full (col-lg-12) -->
+                    <div class="general-instructions">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold mb-0">General Instructions</h5>
+                            <div class="text-primary fw-bold px-4 py-2"
+                                 style="background-color: #DCE8FD; border-radius: 20px; font-size: 1rem;">
+                                <p class="mb-0">Date of Registration: @DateTime.Now.ToString("MMMM dd, yyyy") - @DateTime.Now.ToString("hh:mm tt")</p>
+                            </div>
+                        </div>
+
+                        <p>
+                            This is for the <strong>Laurelcrest Junior High School Admission </strong>.
+                            Please ensure that all the information you provide is <strong>true and correct</strong>.
+                            All fields are required unless marked as optional. Make sure to <strong>provide accurate information</strong> and complete all required fields.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

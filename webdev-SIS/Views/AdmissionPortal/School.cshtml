@@ -1,0 +1,181 @@
+﻿@model AdmissionEntity
+@{
+    Layout = "AdmissionLayout";  // Specifies the layout to use
+    ViewData["Title"] = "School";
+}
+<!-- Progress Steps -->
+<div class="form-progress">
+    <div class="progress-step active" id="createAccountStep">
+        <div class="progress-circle active">1</div>
+        <small>Create Account</small>
+    </div>
+    <div class="progress-step active" id="instructionsStep">
+        <div class="progress-circle active">2</div>
+        <small>Instructions</small>
+    </div>
+    <div class="progress-step active" id="personalInfoStep">
+        <div class="progress-circle active">3</div>
+        <small>Personal Information</small>
+    </div>
+    <div class="progress-step active" id="contactStep">
+        <div class="progress-circle active">4</div>
+        <small>Contact</small>
+    </div>
+    <div class="progress-step active" id="familyStep">
+        <div class="progress-circle active">5</div>
+        <small>Family</small>
+    </div>
+    <div class="progress-step active" id="schoolStep">
+        <div class="progress-circle active">6</div>
+        <small>School</small>
+    </div>
+    <div class="progress-step" id="finishStep">
+        <div class="progress-circle">7</div>
+        <small>Finish</small>
+    </div>
+</div>
+
+<hr />
+
+
+@if (Model != null)
+{
+    <form asp-controller="AdmissionPortal" asp-action="School" method="post">
+        <div class="container mt-4 row mb-3 mt-3 align-items-end flex-grow-1 p-4 border rounded shadow-sm" style="background-color: #ffffff;">
+            <div class="p-3 text-white rounded mb-3" style="background-color: #172154;">
+                <h6 class="fw-bold mb-0">Previous School Information</h6>
+            </div>
+
+            <!-- Previous School Information -->
+            <div class="row mb-3 align-items-end">
+                <div class="col-md-6">
+                    <label for="SchoolName" class="form-label">Name of Previous School <span style="color: red;">*</span></label>
+                    <input type="text" id="SchoolName" name="SchoolName" class="form-control form-input" required value="@Model.SchoolName">
+                </div>
+                <div class="col-md-6">
+                    <label for="SchoolAddress" class="form-label">School Address <span style="color: red;">*</span></label>
+                    <input type="text" id="SchoolAddress" name="SchoolAddress" class="form-control form-input" required value="@Model.SchoolAddress">
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-end">
+                <div class="col-md-6">
+                    <label for="SchoolContact" class="form-label">School Contact Number <span style="color: red;">*</span></label>
+                    <input type="tel" id="SchoolContact" name="SchoolContact" class="form-control form-input"
+                           required pattern="^\d{11}$" title="School contact number must be exactly 11 digits."
+                           value="@Model.SchoolContact">
+                </div>
+                <div class="col-md-6">
+                    <label for="SchoolType" class="form-label">School Type <span style="color: red;">*</span></label>
+                    <select id="SchoolType" name="SchoolType" class="form-control form-input" required>
+                        <option value="">Select School Type</option>
+                        <option value="Public" selected="@(Model.SchoolType == "Public")">Public</option>
+                        <option value="Private" selected="@(Model.SchoolType == "Private")">Private</option>
+                        <option value="Other" selected="@(Model.SchoolType == "Other")">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="row mb-3 align-items-end">
+                <div class="col-md-4">
+                    <label for="YearOfGraduation" class="form-label">Year of Graduation <span style="color: red;">*</span></label>
+                    <input type="text" id="YearOfGraduation" name="YearOfGraduation" class="form-control form-input"
+                           required pattern="^\d{4}$" title="Please enter a valid year (4 digits)."
+                           placeholder="2000" value="@(Model.YearOfGraduation != 0 ? Model.YearOfGraduation : "")">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="LRN" class="form-label">Learner Reference No. (LRN) <span style="color: red;">*</span></label>
+                    <input type="text" id="LRN" name="LRN" class="form-control form-input"
+                           required pattern="^\d{12}$" maxlength="12"
+                           title="LRN must be exactly 12 digits and only integers."
+                           value="@Model.LRN">
+                    <small id="lrnError" class="error-message"></small>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="GWA" class="form-label">General Weighted Average <span style="color: red;">*</span></label>
+                    <input type="text" id="GWA" name="GWA" class="form-control form-input"
+                           required pattern="^(64\.00|(?:6[5-9]|[7-9][0-9])\.00|100\.00)$"
+                           title="GWA must be between 64.00 and 100.00 with exactly two decimal places."
+                           value="@Model.GWA">
+                    <small id="gwaError" class="error-message text-danger"></small>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Back and Next Buttons -->
+        <div class="text-end">
+            <a href="@Url.Action("Family", "AdmissionPortal")"
+               class="btn btn-secondary px-4 py-2 me-3">
+                Back
+            </a>
+            <button type="submit" class="btn btn-primary px-4 py-2">
+                Next
+            </button>
+        </div>
+
+    </form>
+}
+else
+{
+    <p class="text-danger">Error: Enrollment data is unavailable.</p>
+}
+
+        <script>
+            function validateGWA() {
+                const input = document.getElementById("GWA");
+                const error = document.getElementById("gwaError");
+                const value = input.value.trim();
+
+                // Exact range: 64.00 to 100.00 with exactly two decimal places
+                const regex = /^(64\.00|(?:6[5-9]|[7-9][0-9])\.00|100\.00)$/;
+
+                if (!regex.test(value)) {
+                    error.textContent = "GWA must be between 64.00 and 100.00 with exactly two decimal places.";
+                } else {
+                    error.textContent = "";
+                }
+            }
+
+            document.getElementById("GWA").addEventListener("keypress", function (e) {
+                const char = e.key;
+                const input = e.target;
+                const value = input.value;
+
+                // Allow digits and one dot only
+                const allowedChars = "0123456789.";
+
+                // Block invalid characters
+                if (!allowedChars.includes(char)) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // Block second decimal point
+                if (char === "." && value.includes(".")) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // Block more than 3 digits before the decimal
+                const parts = value.split(".");
+                if (!value.includes(".") && parts[0].length >= 3 && char !== ".") {
+                    e.preventDefault();
+                    return;
+                }
+
+                // Block more than two digits after the decimal
+                if (value.includes(".")) {
+                    const decimalPart = parts[1] || "";
+                    if (decimalPart.length >= 2) {
+                        e.preventDefault();
+                        return;
+                    }
+                }
+            });
+
+            document.getElementById("GWA").addEventListener("input", validateGWA);
+        </script>

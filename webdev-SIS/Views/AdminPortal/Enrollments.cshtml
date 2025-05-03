@@ -1,0 +1,99 @@
+﻿@model IEnumerable<EnrollmentEntity>
+
+@{
+    Layout = "Admin_Layout";  // Specifies the layout to use
+    ViewData["Title"] = "Enrollments";
+}
+
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; width: 100vw; margin: 0;">
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png"
+         alt="Decorative background representing Grade 7"
+         class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <!-- Main Content -->
+    <div class="container" style="background-color: rgba(220, 232, 253, 0.9); padding: 20px; border-radius: 10px;">
+        <section class="d-flex align-items-center justify-content-between fixed ml-72 px-11 py-3 w-full top-20 left-0" style="font-weight: bold;">
+            <!-- Left Section -->
+            <p class="text-sm text-black fs-5 m-0">
+                <i class="fas fa-user-check text-black"></i>
+                <a asp-controller="AdminPortal" asp-action="Enrollment" class="text-black" style="text-decoration: none;">Enrollment</a>
+            </p>
+
+            <!-- Right Section (Search Bar) -->
+            <input type="text" id="searchInput" class="form-control" style="width: 400px;" placeholder="Search student's name" onkeyup="searchEnrollment()">
+        </section>
+
+        <div class="table-responsive mt-3 d-flex justify-content-center">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="background-color: #162051; color: white; border-radius: 10px 0 0 0; text-align: center;">
+                            LRN
+                        </th>
+                        <th style="background-color: #162051; color: white; text-align: center;">
+                            Student Name
+                        </th>
+                        <th style="background-color: #162051; color: white; text-align: center;">
+                            Gender
+                        </th>
+                        <th style="background-color: #162051; color: white; text-align: center;">
+                            Grade Level
+                        </th>
+                        <th style="background-color: #162051; color: white; text-align: center;">
+                            Date Enrolled
+                        </th>
+                        <th style="background-color: #162051; color: white; border-radius: 0 10px 0 0; text-align: center;">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var student in Model)
+                        {
+                            <tr class="search-row" style="text-align: center;">
+                                <td>@student.LRN</td>
+                                <td class="student-name">@($"{student.FirstName} {(string.IsNullOrWhiteSpace(student.MiddleName) ? "" : student.MiddleName + " ")}{student.LastName}")</td>
+                                <td>@student.Sex</td>
+                                <td>@student.GradeLevel</td>
+                                <td>@student.DateEnrolled.ToString("yyyy-MM-dd")</td>
+                                <td>
+                                    <!-- View Button (Navigates to StudentDetail) -->
+                                    <a asp-controller="AdminPortal" asp-action="EnrollmentDetails"  asp-route-id="@student.Id" class="btn btn-primary btn-sm">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">No enrolled students found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        //search bar
+        function searchEnrollment() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let rows = document.querySelectorAll(".search-row");
+
+            rows.forEach(row => {
+                let studentName = row.querySelector(".student-name").textContent.toLowerCase();
+                row.style.display = studentName.includes(input) ? "" : "none";
+            });
+        }
+    </script>
+
+</body>
+

@@ -1,0 +1,78 @@
+﻿@{
+    Layout = "Faculty_Layout";  // Specifies the layout to use
+    ViewData["Title"] = "Home Page";
+}
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; margin: 0;">
+
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png"
+         alt="Decorative background representing Grade 7"
+         class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <!-- Main Content -->
+    <div class="container" style="background-color: rgba(220, 232, 253, 0.9); padding: 20px; border-radius: 10px;">
+        <section class="fixed px-3 py-4 w-100 top-20 left-0" style="font-weight: bold;">
+            <p class="text-sm text-black fs-5">
+                <i class="fas fa-user-check text-black"></i>
+                <a asp-controller="FacultyPortal" asp-action="Index" class="text-black" style="text-decoration: none;">Grades Report</a>
+            </p>
+        </section>
+
+        <!-- Subject Dropdown -->
+        <div class="row align-items-center">
+            <!-- Dropdown on the left -->
+            <div class="col-12 col-md-4 mb-2">
+                <label for="dropdownSubject" class="form-label fs-6 visually-hidden">Select Subject</label>
+                <select class="form-select fs-6 w-100" id="dropdownSubject" aria-label="Choose Subject">
+                    <option value="filipino">Filipino</option>
+                    <option value="english">English</option>
+                    <option value="math">Mathematics</option>
+                    <option value="science">Science</option>
+                    <option value="ap">Araling Panlipunan (AP)</option>
+                    <option value="esp">Edukasyon sa Pagpapakatao (ESP)</option>
+                    <option value="tle">Technology and Livelihood Education (TLE)</option>
+                    <option value="mapeh">MAPEH</option>
+                </select>
+            </div>
+
+            <!-- H1 on the right -->
+            <div class="col-12 col-md-8 text-md-end text-center">
+                <h5><strong>Grade 7 - Mars | S.Y. 2019-2020</strong></h5>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="background-color: #162051; color: white; border-top-left-radius: 10px;">LRN</th>
+                        <th style="background-color: #162051; color: white;">Student Name</th>
+                        <th style="background-color: #162051; color: white;">1st Quarter</th>
+                        <th style="background-color: #162051; color: white;">2nd Quarter</th>
+                        <th style="background-color: #162051; color: white;">3rd Quarter</th>
+                        <th style="background-color: #162051; color: white;">4th Quarter</th>
+                        <th style="background-color: #162051; color: white;">Final Grade</th>
+                        <th style="background-color: #162051; color: white; border-top-right-radius: 10px;">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>406494150200</td>
+                        <td>Aiza Mae</td>
+                        <td>97</td>
+                        <td>89</td>
+                        <td>90</td>
+                        <td>83</td>
+                        <td>78</td>
+                        <td>Passed</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+</body>

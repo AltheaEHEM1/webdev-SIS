@@ -1,0 +1,168 @@
+﻿@model webdev_SIS.Models.UserEntity
+
+@{
+    Layout = "_Account";
+    ViewData["Title"] = "Signup";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; width: 100vw; margin: 0;">
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png"
+         alt="Decorative background representing Grade 7"
+         class="img-fluid w-100"
+         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6">
+        <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center w-100">
+                <div class="row justify-content-center w-100">
+                    <div class="col-md-10 col-lg-8 col-xl-6 col-xxl-4">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                                    <img src="~/images/logo.png" width="180" alt="Dark Logo">
+                                </a>
+                                <p class="text-center mb-4">Create Your Account</p>
+
+                                @if (TempData["ErrorMessage"] != null)
+                                {
+                                    <div class="alert alert-danger">
+                                        @TempData["ErrorMessage"]
+                                    </div>
+                                }
+
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <!-- Form Section -->
+                                <form asp-action="Signup" asp-controller="Account" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <div class="mb-3">
+                                        <label for="FirstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="FirstName" name="FirstName" required />
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="LastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="LastName" name="LastName" required />
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="Email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="Email" name="Email" required onblur="validateEmail()" />
+                                        <small id="emailError" style="color: red; display: none;">Please enter a valid email address.</small>
+                                    </div>
+
+                                    <div class="mb-3 position-relative">
+                                        <label for="Password" class="form-label">Password</label>
+                                        <div class="input-group">
+                                            <input type="password"
+                                                   class="form-control"
+                                                   id="Password"
+                                                   name="PasswordHash"
+                                                   required
+                                                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{12,}$"
+                                                   title="Password must be at least 12 characters long, include at least one lowercase letter, one uppercase letter, one number, and one special character."
+                                                   />
+                                            <span class="input-group-text bg-white">
+                                                <i class="bi bi-eye-slash" id="togglePassword" style="cursor: pointer;" onclick="togglePassword('Password', 'togglePassword')"></i>
+                                            </span>
+                                        </div>
+                                        <div id="password-strength" class="mt-2"></div>
+                                        <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                                    </div>
+
+
+
+
+                                    <!-- Hidden Role -->
+                                    <input type="hidden" name="Role" value="Admission" />
+
+                                    <!-- Sign Up Button -->
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-primary btn-sm px-5 py-2 mb-4 rounded-2" style="font-size: 1rem; width: 200px;">
+                                            Sign Up
+                                        </button>
+                                    </div>
+
+                                    <!-- Create Account Link -->
+                                    <div class="d-flex align-items-center justify-content-center" style="font-size: 0.85rem;">
+                                        <p class="mb-0 fw-bold">Have an account?</p>
+                                        <a class="text-primary fw-bold ms-2" asp-controller="Account" asp-action="Login">
+                                            Log in 
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(inputId, iconId) {
+            var passwordField = document.getElementById(inputId);
+            var eyeIcon = document.getElementById(iconId);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove('bi-eye-slash');
+                eyeIcon.classList.add('bi-eye');
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove('bi-eye');
+                eyeIcon.classList.add('bi-eye-slash');
+            }
+        }
+
+        document.getElementById('Password').addEventListener('input', function () {
+            const password = this.value;
+            const strengthIndicator = document.getElementById('password-strength');
+            const isValid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{12,}$/.test(password);
+
+            this.setCustomValidity(isValid ? "" : "Password must be 12+ chars with uppercase, lowercase, number, and symbol.");
+
+            // Display password strength feedback
+            if (password.length < 8) {
+                strengthIndicator.textContent = "Password is too short!";
+                strengthIndicator.style.color = "red";
+            } else if (!/[A-Z]/.test(password)) {
+                strengthIndicator.textContent = "Password should contain at least one uppercase letter!";
+                strengthIndicator.style.color = "orange";
+            } else if (!/[a-z]/.test(password)) {
+                strengthIndicator.textContent = "Password should contain at least one lowercase letter!";
+                strengthIndicator.style.color = "orange";
+            } else if (!/\d/.test(password)) {
+                strengthIndicator.textContent = "Password should contain at least one number!";
+                strengthIndicator.style.color = "orange";
+            } else if (!/[^A-Za-z\d]/.test(password)) {
+                strengthIndicator.textContent = "Password should contain at least one special character!";
+                strengthIndicator.style.color = "orange";
+            } else {
+                strengthIndicator.textContent = "Password is strong!";
+                strengthIndicator.style.color = "green";
+            }
+        });
+
+        //email
+
+                //gmail
+                      var domain = '@@gmail.com';  // Razor now correctly treats this as a string and not as C# code
+
+                    function validateEmail() {
+                      var email = document.getElementById('Email').value;
+                      var emailError = document.getElementById('emailError');
+
+                      // Check if the email ends with @@gmail.com
+                      if (!email.endsWith(domain)) {
+                        emailError.style.display = 'block';  // Show error message
+                      } else {
+                        emailError.style.display = 'none';  // Hide error message
+                      }
+                    }
+    </script>
+
+</body>

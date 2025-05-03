@@ -1,0 +1,128 @@
+﻿@{
+    Layout = "Faculty_Layout";  // Specifies the layout to use
+    ViewData["Title"] = "Home Page";
+}
+
+<body class="position-relative bg-image" style="font-family: 'Poppins', sans-serif; overflow-x: hidden; height: 100vh; margin: 0;">
+
+    <!-- Background Image -->
+    <img src="~/images/bgjr.png" alt="Decorative background representing Grade 7" class="img-fluid w-100" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+
+    <!-- Main Content -->
+    <div class="container-fluid p-3" style="background-color: rgba(220, 232, 253, 0.9); border-radius: 10px;">
+
+        <section class="mt-4 ps-4 pe-2 py-3 w-100 top-20 left-0" style="font-weight: bold;">
+            <p class="text-sm text-black fs-5">
+                <i class="fas fa-user-check text-black"></i>
+                <a asp-controller="FacultyPortal" asp-action="Index" class="text-black" style="text-decoration: none;">Change of grades</a>
+            </p>
+        </section>
+
+        <!-- Container for Left and Right Sections -->
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-start p-3" style="max-width: 1200px; margin: 0 auto;">
+            <!-- Left Container -->
+            <div class="left-container bg-white p-3 rounded shadow mb-3 mb-md-0" style="flex: 0 0 30%; min-width: 300px;">
+                <h4>Grade Correction Form</h4>
+                <div class="form-group">
+                    <label for="requestID"><strong>Request ID:</strong></label>
+                    <p id="requestID">RFQ-802992</p>
+                </div>
+                <div class="form-group">
+                    <label for="status"><strong>Status:</strong></label>
+                    <p id="status">Declined</p>
+                </div>
+                <div class="form-group">
+                    <label for="submittedBy"><strong>Submitted By:</strong></label>
+                    <p id="submittedBy">Nadine Borja</p>
+                </div>
+                <div class="form-group">
+                    <label for="dateSubmitted"><strong>Date Submitted:</strong></label>
+                    <p id="dateSubmitted">12/04/2024</p>
+                </div>
+            </div>
+
+            <!-- Right Container -->
+            <div class="right-container bg-white p-3 rounded shadow flex-grow-1 ms-md-3">
+                <div class="row g-3">
+                    <!-- Inline Section -->
+                    <div class="col-12 col-md-6">
+                        <label for="schoolYear">School Year:</label>
+                        <input type="text" class="form-control" id="schoolYear" value="2019-2020" disabled>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="section">Section:</label>
+                        <input type="text" class="form-control" id="section" value="Mars" disabled>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="gradeLevel">Grade Level:</label>
+                        <input type="text" class="form-control" id="gradeLevel" value="7" disabled>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="program">Program:</label>
+                        <input type="text" class="form-control" id="program" value="Regular" disabled>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="studentName">Student Name:</label>
+                        <input type="text" class="form-control" id="studentName" value="Brooke, Alexander Cruz" disabled>
+                    </div>
+                    <div class="col-12">
+                        <label for="studentNumber">LRN:</label>
+                        <input type="text" class="form-control" id="studentNumber" value="406494150200" disabled>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="subject">Subject:</label>
+                        <input type="text" class="form-control" id="subject" value="Araling Panlipunan" disabled>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="quarter">Quarter:</label>
+                        <input type="text" class="form-control" id="quarter" value="3" disabled>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="currentGrade">Current Grade:</label>
+                        <input type="text" class="form-control" id="currentGrade" value="75" disabled>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="updatedGrade">Updated Grade:</label>
+                        <input type="text" class="form-control" id="updatedGrade" value="83" disabled>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="reason">Reason for Grade Change:</label>
+                        <textarea class="form-control" id="reason" rows="3" disabled>Incorrect Grade Computation</textarea>
+                    </div>
+                    <div class="col-12">
+                        <label for="supportingDocuments">Supporting Documents:</label>
+                        <ul class="list-group">
+                            <li class="list-group-item">Screenshot 2024-12-03 220313.png</li>
+                        </ul>
+                    </div>
+                    <!-- Editable Note -->
+                    <div class="col-12">
+                        <label for="note">Note:</label>
+                        <textarea class="form-control" id="note" rows="3">Your request has been rejected due to insufficient file support.</textarea>
+                    </div>
+                    <!-- Editable Request Status -->
+                    <div class="col-12">
+                        <label for="requestStatus">Request Status:</label>
+                        <select class="form-control" id="requestStatus">
+                            <option value="Approved">Approved</option>
+                            <option value="Declined" selected>Declined</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <a href="#" onclick="window.location.href='@Url.Action("ChangeRG", "FacultyPortal")'; return false;" class="btn btn-secondary me-3" data-bs-dismiss="modal">Close</a>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
+        </div>
+
+    </div>
+
+</body>
