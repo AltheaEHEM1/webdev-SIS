@@ -1,4 +1,4 @@
-﻿@model List<UserEntity>
+﻿@model webdev_SIS.Models.FacultyPageViewModel
 
 @{
     Layout = "Admin_Layout";
@@ -31,9 +31,11 @@
                 <!-- Buttons -->
                 <div class="col-12 col-md-auto ms-auto text-md-end">
                     <div class="d-flex flex-wrap gap-2">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#encodeGradeStatusModal">
+                        <button id="GradingStatusModal" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#encodeGradeStatusModal">
                             Grade Status
                         </button>
+
+                        @await Html.PartialAsync("GradeStatusPartialView", Model.GradingPeriods)
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#facultyModal" id="addBtn">
                             <i class="fas fa-plus-circle"></i> Add Faculty
                         </button>
@@ -58,9 +60,9 @@
                 </thead>
 
                 <tbody>
-                    @if (Model?.Any() == true)
+                    @if (Model.Users != null && Model.Users.Any())
                     {
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Users)
                         {
                             <tr class="text-center" id="facultyRow-@item.Id">
                                 <td>@item.FirstName @item.LastName</td>
@@ -311,61 +313,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-   
-
-
-
-    <!-- Encode Grade Status Modal -->
-    <div class="modal fade" id="encodeGradeStatusModal" tabindex="-1" aria-labelledby="encodeGradeStatusModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="encodeGradeStatusModalLabel">Encode Grade Status</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <!-- Modal Body -->
-                <div class="modal-body">
-                    <form id="encodeGradeStatusForm">
-                        <!-- Grading Periods -->
-                        <div class="mb-3">
-                            <label for="gradingPeriod" class="form-label">Select Grading Period</label>
-                            <select class="form-select" id="gradingPeriod">
-                                <option value="1st Grading">1st Grading</option>
-                                <option value="2nd Grading">2nd Grading</option>
-                                <option value="3rd Grading">3rd Grading</option>
-                                <option value="4th Grading">4th Grading</option>
-                            </select>
-                        </div>
-                        <!-- Current Status -->
-                        <div class="mb-3">
-                            <label for="currentStatus" class="form-label">Current Status</label>
-                            <input type="text" class="form-control" id="currentStatus" value="Closed" readonly>
-                        </div>
-                        <!-- Update Status -->
-                        <div class="mb-3">
-                            <label for="newStatus" class="form-label">New Status</label>
-                            <select class="form-select" id="newStatus">
-                                <option value="Open">Open</option>
-                                <option value="Closed" selected>Closed</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <!-- Modal Footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onclick="updateGradeStatus()">Save Changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 
     <script>

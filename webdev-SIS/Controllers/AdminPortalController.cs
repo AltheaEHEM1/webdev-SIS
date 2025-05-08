@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Data;
 using system_SIS.Services;
 using webdev_SIS.DataLayer;
@@ -732,7 +733,7 @@ namespace webdev_SIS.Controllers
         }
 
 
-
+        
 
 
 
@@ -742,16 +743,57 @@ namespace webdev_SIS.Controllers
         {
             ViewData["ActiveMenu"] = "Faculty";
 
+            _logger.LogInformation("Faculty action called.");
+
             // Correctly set cache control headers to prevent browser caching
             Response.Headers.Append("Cache-Control", "no-cache, no-store, must-revalidate");
             Response.Headers.Append("Pragma", "no-cache");
             Response.Headers.Append("Expires", "0");
 
             var faculty = await _userRepo.GetUsersByRole("Faculty");
-            return View(faculty);
+            var gradingPeriods = await _db.GradingPeriod.ToListAsync(); // make sure to `await` if it's 
+
+            var viewModel = new FacultyPageViewModel
+            {
+                Users = faculty,
+                GradingPeriods = gradingPeriods,
+            };
+
+            return View(viewModel);
+        }
+
+        public IActionResult GradeStatusPartialView()
+        {
+            
+
+            
+            var gradingPeriod = _db.GradingPeriod.Where(g => g.PeriodStatus == "Closed").FirstOrDefault();
+
+            return PartialView("GradeStatusPartialView", gradingPeriod);
         }
 
 
+        [HttpPost]
+        public IActionResult GradeStatusPartialView(int gradingPeriodID, string newStatus)
+        {
+
+            var gradingPeriod = _db.GradingPeriod.Find(gradingPeriodID);
+
+            if (gradingPeriod == null)
+            {
+                _logger.LogWarning("GradingPeriod not found.");
+                return NotFound();
+            }
+
+            gradingPeriod.PeriodStatus = newStatus; 
+
+            _db.GradingPeriod.Update(gradingPeriod);
+            _db.SaveChanges();
+
+            
+
+            return RedirectToAction("Faculty");
+        }
 
 
 

@@ -21,7 +21,9 @@ namespace webdev_SIS.DataLayer
         public DbSet<StudentEntity> Students { get; set; }
         public DbSet<UserEntity> Users { get; set; }
 
+        public DbSet<SchoolYearEntity> SchoolYear { get; set; }
 
+        public DbSet<GradingPeriodEntity> GradingPeriod { get; set; }
 
 
 

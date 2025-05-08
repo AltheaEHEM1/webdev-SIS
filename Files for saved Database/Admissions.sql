@@ -1,4 +1,4 @@
-CREATE TABLE Admissions (
+CREATE TABLE Admissions(
     Id INT IDENTITY(1,1) PRIMARY KEY,
     GradeLevel NVARCHAR(10) NOT NULL CHECK (GradeLevel IN ('Grade 7', 'Grade 8', 'Grade 9', 'Grade 10')),
     FirstName VARCHAR(50) NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE Admissions (
     LRN VARCHAR(12) UNIQUE NOT NULL,
     GWA DECIMAL(4,2) NOT NULL CHECK (GWA BETWEEN 64.00 AND 100.00),
     DateCreated DATETIME DEFAULT GETDATE(),
-    IsDeleted BIT NOT NULL DEFAULT 0,
+    IsDeleted BIT NOT NULL DEFAULT 0
 );
 
 ALTER TABLE Admissions ALTER COLUMN GuardianFirstName NVARCHAR(50) NULL;

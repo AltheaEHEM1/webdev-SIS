@@ -1,0 +1,73 @@
+﻿@* @model webdev_SIS.Models.FacultyPageViewModel *@
+@model List<webdev_SIS.Models.GradingPeriodEntity>
+@* @model webdev_SIS.Models.GradingPeriodEntity *@
+
+@{
+    Layout = "Admin_Layout";
+    ViewData["Title"] = "GradeStatusPartialView";
+}
+
+<!-- Encode Grade Status Modal -->
+<div class="modal fade" id="encodeGradeStatusModal" tabindex="-1" aria-labelledby="encodeGradeStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary text-white">
+                @* <a asp-controller="AdminPortal" asp-action="UpdateGradeStatus">Encode Grade Status</a> *@
+                <h5 class="modal-title" id="encodeGradeStatusModalLabel">Encode Grade Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-controller="AdminPortal" asp-action="GradeStatusPartialView" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+                    <!-- Grading Period Selection -->
+                    <div class="mb-3">
+                        <label for="gradingPeriod" class="form-label">Select Grading Period</label>
+                        <select class="form-select" id="gradingPeriod" name="gradingPeriodID">
+                            @foreach (var item in Model)
+                            {
+                                <option value="@item.GradingPeriodID"
+                                        data-status="@item.PeriodStatus">
+                                    @item.PeriodName
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Current Status (Read-only) -->
+                    <div class="mb-3">
+                        <label for="currentStatus" class="form-label">Current Status</label>
+                        <input type="text" class="form-control" id="currentStatus" name="PeriodStatus" readonly />
+                    </div>
+
+                    <!-- New Status -->
+                    <div class="mb-3">
+                        <label for="newStatus" class="form-label">New Status</label>
+                        <select class="form-select" id="newStatus" name="newStatus">
+                            <option value="Open">Open</option>
+                            <option value="Closed" selected>Closed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateStatus() {
+        var select = document.getElementById("gradingPeriod");
+        var selected = select.options[select.selectedIndex];
+        var status = selected.getAttribute("data-status") || "Closed"; // fallback to "Closed"
+        document.getElementById("currentStatus").value = status;
+    }
+
+    // Update on load and whenever selection changes
+    document.addEventListener("DOMContentLoaded", updateStatus);
+    document.getElementById("gradingPeriod").addEventListener("change", updateStatus);
+</script>
