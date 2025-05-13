@@ -9,10 +9,15 @@ namespace system_SIS.Controllers
     public class FacultyPortalController : BaseController
     {
         private readonly ApplicationDbContext _db;
-        public FacultyPortalController(ApplicationDbContext db)
+        private readonly ILogger<FacultyPortalController> _logger;
+        public FacultyPortalController(ApplicationDbContext db, ILogger<FacultyPortalController> logger)
         {
             _db = db;
+            _logger = logger;
         }
+
+
+
         public async Task<IActionResult> Index()
         {
             ViewData["ActiveMenu"] = "Home";
@@ -67,6 +72,14 @@ namespace system_SIS.Controllers
 
         public IActionResult EncodeGrades()
         {
+            
+            _logger.LogInformation("EncodeGrades action method called.");
+
+
+
+
+
+
             ViewData["ActiveMenu"] = "Grades";
             return View();
         }
